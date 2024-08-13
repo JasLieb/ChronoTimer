@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ChronoTimer.Maui"
+             x:Class="ChronoTimer.Maui.ChronoTimerPage"
+             Shell.NavBarIsVisible="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:RGBToColorConverter x:Key="RGBToColor"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid BackgroundColor="{Binding TimerColor,Converter={StaticResource RGBToColor}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <local:EllipsePulse 
+            Grid.RowSpan="2"
+            ChronoState="{Binding ChronoState, Mode=OneWay}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <Label 
+            Text="{Binding Path=ChronoState.RemainingTime, StringFormat='{}{0:mm\\:ss}'}"
+            TextColor="WhiteSmoke"
+            FontAutoScalingEnabled="true"
+            VerticalOptions="Center"
+            HorizontalOptions="Center">
+            <Label.FontSize>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <On Platform="iOS, Android" Value="128" />
+                    <On Platform="MacCatalyst, WinUI" Value="384" />
+                </OnPlatform>
+            </Label.FontSize>
+        </Label>
+
+        <Button
+            Grid.Row="1" 
+            Margin="12"
+            HorizontalOptions="CenterAndExpand" 
+            Text="Change Setup"
+            Command="{Binding GotoSetupPageCommand}"/>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ChronoTimer.Maui"
+    x:Class="ChronoTimer.Maui.SetupPage"
+    HideSoftInputOnTapped="True"
+    Shell.NavBarIsVisible="False">
+
+    <VerticalStackLayout
+        Padding="30,0"
+        Spacing="25"
+        VerticalOptions="Center"
+        HorizontalOptions="Center">
+        <Image
+            Source="dotnet_bot.png"
+            HeightRequest="185"
+            Aspect="AspectFit"
+            SemanticProperties.Description="dot net bot in a race car number eight"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="24"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.ColumnSpan="2"
+                Text="Exercise time :"
+                FontSize="Medium"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                SemanticProperties.Description="Exercise time :"/>
+
+            <local:TimePicker Grid.Column="2"
+                    SelectedTime="{Binding ExerciceTime, Mode=OneWayToSource}"/>
+
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="24"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label
+                Grid.ColumnSpan="2"
+                Text="Break time :"
+                FontSize="Medium"
+                VerticalOptions="Center"
+                HorizontalOptions="Start"
+                SemanticProperties.Description="Break time :"/>
+
+            <local:TimePicker Grid.Column="2"
+                    SelectedTime="{Binding BreakTime, Mode=OneWayToSource}"/>
+
+        </Grid>
+
+        <Button
+            Text="Start Exercice"
+            SemanticProperties.Hint="Start exercice following given time before"
+            Command="{Binding StartExerciceCommand}"
+            HorizontalOptions="Fill"/>
+    </VerticalStackLayout>
+
+</ContentPage>

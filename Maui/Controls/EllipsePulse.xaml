@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChronoTimer.Maui.EllipsePulse">
+    <Grid
+        x:Name="container"
+        Grid.RowSpan="2"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Ellipse 
+            x:Name="firstEllipse"
+            StrokeThickness="2"
+            WidthRequest="150"
+            HeightRequest="150"
+            Stroke="#c8c8c8" />
+        <Ellipse 
+            x:Name="secondEllipse"
+            StrokeThickness="2"
+            WidthRequest="125"
+            HeightRequest="125"
+            Stroke="#c8c8c8" />
+        <Ellipse 
+            x:Name="thirdEllipse"
+            StrokeThickness="2"
+            WidthRequest="100"
+            HeightRequest="100"
+            Stroke="#c8c8c8" />
+    </Grid>
+</ContentView>
