@@ -17,6 +17,13 @@
             "request": "launch",
             "preLaunchTask": "maui: Build",
             "targetFramework": "net8.0-maccatalyst"
+        },
+        {
+            "name": "Droid",
+            "type": "maui",
+            "request": "launch",
+            "preLaunchTask": "maui: Build",
+            "targetFramework": "net8.0-android"
         }
     ]
 }

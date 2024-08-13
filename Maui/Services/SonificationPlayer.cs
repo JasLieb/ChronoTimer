@@ -1,5 +1,7 @@
 using System;
+#if __IOS__
 using AVFoundation;
+#endif
 using ChronoTimer.Core;
 using Plugin.Maui.Audio;
 

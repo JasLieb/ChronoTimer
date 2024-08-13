@@ -1,5 +1,7 @@
-    using Foundation;
+#if __IOS__
+using Foundation;
 using UIKit;
+#endif
 
 namespace ChronoTimer.Maui;
 
@@ -18,6 +20,8 @@ public class DeviceOrientationService
             UpdateIosOrientation(UIInterfaceOrientationMask.Landscape);
         #endif
     }
+    
+    #if __IOS__
 
     private void UpdateIosOrientation(UIInterfaceOrientationMask orientationMask)
     {
@@ -50,4 +54,5 @@ public class DeviceOrientationService
             );
         }
     }
+    #endif
 }
