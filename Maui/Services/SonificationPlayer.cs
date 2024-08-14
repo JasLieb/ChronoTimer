@@ -1,4 +1,4 @@
-#if __IOS__
+#if IOS
 using AVFoundation;
 #endif
 using ChronoTimer.Core.Services;
@@ -10,7 +10,7 @@ public class SonificationPlayer : ISonificationPlayer
 {
     public async void Alarm()
     {
-        #if __IOS__
+        #if IOS
             AVAudioSession.SharedInstance().SetCategory(AVAudioSessionCategory.Playback);
         #endif
 

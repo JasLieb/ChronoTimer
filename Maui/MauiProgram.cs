@@ -27,10 +27,10 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
-#if __IOS__
+#if IOS
 		builder.Services
 			.AddSingleton<IDeviceOrientationService, Platforms.iOS.Services.IOSDeviceOrientationService>();
-#elif __ANDROID__
+#elif ANDROID
 		builder.Services
 			.AddSingleton<IDeviceOrientationService, Platforms.Android.Services.DroidDeviceOrientationService>();
 #else

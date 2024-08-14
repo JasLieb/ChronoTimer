@@ -1,8 +1,6 @@
-#if __IOS__
 using ChronoTimer.Core.Services;
 using Foundation;
 using UIKit;
-#endif
 
 namespace ChronoTimer.Maui.Platforms.iOS.Services;
 
@@ -10,20 +8,14 @@ public class IOSDeviceOrientationService : IDeviceOrientationService
 {
     public void SetPortrait()
     {
-        #if __IOS__
-            UpdateIosOrientation(UIInterfaceOrientationMask.Portrait);
-        #endif
+        UpdateIosOrientation(UIInterfaceOrientationMask.Portrait);
     }
     
     public void SetLandscape()
     {
-        #if __IOS__
-            UpdateIosOrientation(UIInterfaceOrientationMask.Landscape);
-        #endif
+        UpdateIosOrientation(UIInterfaceOrientationMask.Landscape);
     }
     
-    #if __IOS__
-
     private void UpdateIosOrientation(UIInterfaceOrientationMask orientationMask)
     {
         if (UIDevice.CurrentDevice.CheckSystemVersion(16, 0))
@@ -46,14 +38,11 @@ public class IOSDeviceOrientationService : IDeviceOrientationService
                     );
                 }
             }
+            return;
         }
-        else
-        {
-            UIDevice.CurrentDevice.SetValueForKey(
-                new NSNumber((int)orientationMask), 
-                new NSString("orientation")
-            );
-        }
+        UIDevice.CurrentDevice.SetValueForKey(
+            new NSNumber((int)orientationMask), 
+            new NSString("orientation")
+        );
     }
-    #endif
 }
