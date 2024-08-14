@@ -1,10 +1,10 @@
 #if __IOS__
-using ChronoTimer.Core;
+using ChronoTimer.Core.Services;
 using Foundation;
 using UIKit;
 #endif
 
-namespace ChronoTimer.Maui;
+namespace ChronoTimer.Maui.Platforms.iOS.Services;
 
 public class IOSDeviceOrientationService : IDeviceOrientationService
 {

@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using ChronoTimer.Core.Services.ChronoTimer;
+using ChronoTimer.Core.Services;
 
-namespace ChronoTimer.Core;
+namespace ChronoTimer.Core.ViewModels;
 
 public partial class SetupViewModel(
     IChronoTimer chronoTimer,

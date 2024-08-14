@@ -1,4 +1,4 @@
-﻿namespace ChronoTimer.Core;
+﻿namespace ChronoTimer.Core.Models;
 
 public class RGB(int red, int green, int blue)
 {

@@ -1,6 +1,6 @@
-using ChronoTimer.Core;
+using ChronoTimer.Core.Models;
 
-namespace ChronoTimer.Maui;
+namespace ChronoTimer.Maui.Controls;
 
 public partial class EllipsePulse : ContentView
 {

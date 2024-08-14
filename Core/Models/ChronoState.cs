@@ -1,4 +1,4 @@
-﻿namespace ChronoTimer.Core;
+﻿namespace ChronoTimer.Core.Models;
 
 public enum ChronoStates
 {

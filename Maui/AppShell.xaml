@@ -3,14 +3,14 @@
     x:Class="ChronoTimer.Maui.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:ChronoTimer.Maui"
+    xmlns:pages="clr-namespace:ChronoTimer.Maui.Pages"
     Shell.FlyoutBehavior="Disabled"
     Title="ChronoTimer">
     <ShellContent
-        ContentTemplate="{DataTemplate local:SetupPage}"
+        ContentTemplate="{DataTemplate pages:SetupPage}"
         Route="setup" />
 
     <ShellContent
-        ContentTemplate="{DataTemplate local:ChronoTimerPage}"
+        ContentTemplate="{DataTemplate pages:ChronoTimerPage}"
         Route="chrono" />
 </Shell>

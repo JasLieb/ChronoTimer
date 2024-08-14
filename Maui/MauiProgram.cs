@@ -1,5 +1,9 @@
 ﻿using System.Reactive.Concurrency;
-using ChronoTimer.Core;
+using ChronoTimer.Core.Services;
+using ChronoTimer.Core.Services.ChronoTimer;
+using ChronoTimer.Core.ViewModels;
+using ChronoTimer.Core.ViewModels.ChronoTimer;
+using ChronoTimer.Maui.Pages;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
@@ -25,16 +29,16 @@ public static class MauiProgram
 
 #if __IOS__
 		builder.Services
-			.AddSingleton<IDeviceOrientationService, IOSDeviceOrientationService>();
+			.AddSingleton<IDeviceOrientationService, Platforms.iOS.Services.IOSDeviceOrientationService>();
 #elif __ANDROID__
 		builder.Services
-			.AddSingleton<IDeviceOrientationService, DroidDeviceOrientationService>();
+			.AddSingleton<IDeviceOrientationService, Platforms.Android.Services.DroidDeviceOrientationService>();
 #else
 		builder.Services
-			.AddSingleton<IDeviceOrientationService, NullDeviceOrientationService>();
+			.AddSingleton<IDeviceOrientationService, Services.NullDeviceOrientationService>();
 #endif
 
-		builder.Services
+        builder.Services
 			.AddTransient<IScheduler>(_ => NewThreadScheduler.Default)
 			.AddSingleton<INavigator, ShellNavigatorService>()
 			.AddSingleton<IChronoTimer, ChronoTimerService>()

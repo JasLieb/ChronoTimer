@@ -1,7 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using ChronoTimer.Core.Models;
+using ChronoTimer.Core.Services;
+using ChronoTimer.Core.Services.ChronoTimer;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
-namespace ChronoTimer.Core;
+namespace ChronoTimer.Core.ViewModels.ChronoTimer;
 
 public partial class ChronoTimerViewModel : ObservableObject, IDisposable
 {

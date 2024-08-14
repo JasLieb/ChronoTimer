@@ -2,20 +2,21 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using ChronoTimer.Core.Models;
 
-namespace ChronoTimer.Core;
+namespace ChronoTimer.Core.Services.ChronoTimer;
 
 public class ChronoTimerService(
-    IScheduler scheduler, 
+    IScheduler scheduler,
     ISonificationPlayer sonificationPlayer
 ) : IChronoTimer
 {
     private static readonly TimeSpan _period = TimeSpan.FromMilliseconds(100);
     private readonly IScheduler _scheduler = scheduler;
     private readonly ISonificationPlayer _sonificationPlayer = sonificationPlayer;
-    
+
     private IDisposable _currentTimeSubscription = Disposable.Empty;
-    
+
     public IObservable<ChronoState> Chrono => _chronoSubject;
     private readonly BehaviorSubject<ChronoState> _chronoSubject = new(new());
 
@@ -33,26 +34,26 @@ public class ChronoTimerService(
 
     private void StartBreak(TimeSpan exerciceTime, TimeSpan breakTime) =>
         StartTimer(
-            breakTime, 
-            remaining => EmitBreakTime(remaining, breakTime), 
+            breakTime,
+            remaining => EmitBreakTime(remaining, breakTime),
             () => StartExercice(exerciceTime, breakTime)
         );
 
     private void StartTimer(
-        TimeSpan dueTime, 
+        TimeSpan dueTime,
         Action<TimeSpan> notifyRemainingTime,
         Action elapsedAction
     )
     {
         notifyRemainingTime(dueTime);
-        _currentTimeSubscription = 
+        _currentTimeSubscription =
             Observable.Timer(_period, _scheduler)
             .Repeat()
             .Subscribe(
-                time => 
+                time =>
                 {
                     notifyRemainingTime(dueTime -= _period);
-                    if(dueTime <= TimeSpan.Zero)
+                    if (dueTime <= TimeSpan.Zero)
                     {
                         _currentTimeSubscription.Dispose();
                         _sonificationPlayer.Alarm();
@@ -63,7 +64,7 @@ public class ChronoTimerService(
     }
 
     private void EmitExerciceTime(
-        TimeSpan remainingTime, 
+        TimeSpan remainingTime,
         TimeSpan originalTime
     ) =>
         EmitChronoState(

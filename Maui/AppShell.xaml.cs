@@ -1,6 +1,4 @@
-﻿using Microsoft.Maui.Controls;
-
-namespace ChronoTimer.Maui;
+﻿namespace ChronoTimer.Maui;
 
 public partial class AppShell : Shell
 {

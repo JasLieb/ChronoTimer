@@ -1,8 +1,8 @@
-﻿namespace ChronoTimer.Tests;
+﻿namespace ChronoTimer.Tests.Services;
 
 public class ChronoTimerServiceTests : IDisposable
 {
-    
+
     private readonly TimeSpan _exerciceTime = TimeSpan.FromSeconds(3);
     private readonly TimeSpan _breakTime = TimeSpan.FromSeconds(1);
 
@@ -33,8 +33,8 @@ public class ChronoTimerServiceTests : IDisposable
     {
         StartExercice();
 
-        _timer.StopExercice();        
-    
+        _timer.StopExercice();
+
         _currentChrono!.State.Should().Be(ChronoStates.NotStarted);
         _currentChrono.RemainingTime.Should().BeNull();
         _currentChrono.OriginalTime.Should().BeNull();
@@ -71,11 +71,11 @@ public class ChronoTimerServiceTests : IDisposable
         StartExercice();
 
         _scheduler.AdvanceBy(_exerciceTime.Ticks);
-    
+
         _sonificationPlayer.Received().Alarm();
     }
 
-    [Fact] 
+    [Fact]
     public void CompleteExerciceShouldUpdateChronoWithBreakTime()
     {
         StartExercice();
@@ -87,7 +87,7 @@ public class ChronoTimerServiceTests : IDisposable
         _currentChrono.OriginalTime.Should().Be(_breakTime);
     }
 
-    [Fact] 
+    [Fact]
     public void CompleteBreakShouldUpdateChronoWithExerciceTime()
     {
         StartExercice();
@@ -109,13 +109,13 @@ public class ChronoTimerServiceTests : IDisposable
         _sonificationPlayer.ClearReceivedCalls();
 
         _scheduler.AdvanceBy(_breakTime.Ticks);
-        
+
         _sonificationPlayer.Received().Alarm();
     }
 
     private void StartExercice() =>
         _timer.StartExercice(_exerciceTime, _breakTime);
-    
+
 
     public void Dispose()
     {

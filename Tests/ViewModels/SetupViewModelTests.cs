@@ -1,4 +1,4 @@
-﻿namespace ChronoTimer.Tests;
+﻿namespace ChronoTimer.Tests.ViewModels;
 
 public class SetupViewModelTests
 {
@@ -19,7 +19,7 @@ public class SetupViewModelTests
     public void OnAppearingShouldSetPortraitOrientation()
     {
         _viewModel.OnAppearing();
-    
+
         _deviceOrientation.Received().SetPortrait();
     }
 

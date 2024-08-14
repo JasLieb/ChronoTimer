@@ -1,7 +1,7 @@
 #if __IOS__
 using AVFoundation;
 #endif
-using ChronoTimer.Core;
+using ChronoTimer.Core.Services;
 using Plugin.Maui.Audio;
 
 namespace ChronoTimer.Maui;

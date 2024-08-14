@@ -1,6 +1,4 @@
-﻿using System.Reactive.Subjects;
-
-namespace ChronoTimer.Tests;
+﻿namespace ChronoTimer.Tests.ViewModels;
 
 public class ChronoTimerViewModelTests
 {
@@ -31,7 +29,7 @@ public class ChronoTimerViewModelTests
     public void DisplayedRemainingTimeShouldBeActualRemainingTime()
     {
         _chronoStateSubject.OnNext(
-            new (ChronoStates.ExerciceTime, TimeSpan.FromSeconds(1))
+            new(ChronoStates.ExerciceTime, TimeSpan.FromSeconds(1))
         );
 
         _viewModel.ChronoState.State.Should().Be(ChronoStates.ExerciceTime);
@@ -48,7 +46,7 @@ public class ChronoTimerViewModelTests
     [Fact]
     public void ExerciceTimeShouldHaveRedColor()
     {
-        _chronoStateSubject.OnNext(new(ChronoStates.ExerciceTime, TimeSpan.MaxValue));        
+        _chronoStateSubject.OnNext(new(ChronoStates.ExerciceTime, TimeSpan.MaxValue));
         _viewModel.TimerColor.Should().BeEquivalentTo(new RGB(254, 27, 0));
     }
 
@@ -56,7 +54,7 @@ public class ChronoTimerViewModelTests
     public void BreakTimeShouldHaveGreenColor()
     {
         _chronoStateSubject.OnNext(new(ChronoStates.BreakTime, TimeSpan.MaxValue));
-        _viewModel.TimerColor.Should().BeEquivalentTo(new RGB(0,128,0));
+        _viewModel.TimerColor.Should().BeEquivalentTo(new RGB(0, 128, 0));
     }
 
     [Fact]

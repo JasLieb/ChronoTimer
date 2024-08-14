@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ChronoTimer.Maui"
-             x:Class="ChronoTimer.Maui.ChronoTimerPage"
+             xmlns:converters="clr-namespace:ChronoTimer.Maui.Converters"
+             xmlns:controls="clr-namespace:ChronoTimer.Maui.Controls"
+             x:Class="ChronoTimer.Maui.Pages.ChronoTimerPage"
              Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <local:RGBToColorConverter x:Key="RGBToColor"/>
+            <converters:RGBToColorConverter x:Key="RGBToColor"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid BackgroundColor="{Binding TimerColor,Converter={StaticResource RGBToColor}}">
@@ -15,7 +16,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <local:EllipsePulse 
+        <controls:EllipsePulse 
             Grid.RowSpan="2"
             ChronoState="{Binding ChronoState, Mode=OneWay}"
             HorizontalOptions="Center"

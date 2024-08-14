@@ -2,8 +2,8 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:ChronoTimer.Maui"
-    x:Class="ChronoTimer.Maui.SetupPage"
+    xmlns:controls="clr-namespace:ChronoTimer.Maui.Controls"
+    x:Class="ChronoTimer.Maui.Pages.SetupPage"
     HideSoftInputOnTapped="True"
     Shell.NavBarIsVisible="False">
 
@@ -33,7 +33,7 @@
                 HorizontalOptions="Start"
                 SemanticProperties.Description="Exercise time :"/>
 
-            <local:TimePicker Grid.Column="2"
+            <controls:TimePicker Grid.Column="2"
                     SelectedTime="{Binding ExerciceTime, Mode=OneWayToSource}"/>
 
         </Grid>
@@ -53,7 +53,7 @@
                 HorizontalOptions="Start"
                 SemanticProperties.Description="Break time :"/>
 
-            <local:TimePicker Grid.Column="2"
+            <controls:TimePicker Grid.Column="2"
                     SelectedTime="{Binding BreakTime, Mode=OneWayToSource}"/>
 
         </Grid>

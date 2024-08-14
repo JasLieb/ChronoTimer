@@ -1,4 +1,4 @@
-﻿using ChronoTimer.Core;
+﻿using ChronoTimer.Core.Services;
 
 namespace ChronoTimer.Maui;
 
