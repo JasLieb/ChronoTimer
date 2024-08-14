@@ -24,10 +24,46 @@ public class SetupViewModelTests
     }
 
     [Fact]
+    public void OnAppearingShouldResetErrors()
+    {
+        _viewModel.OnAppearing();
+
+        _viewModel.Error.Should().BeNull();
+        _viewModel.IsErrorsVisible.Should().BeFalse();
+    }
+
+    [Fact]
+    public void ASelectedTimeIsZeroShouldCannotExecuteStartExerciceCommand()
+    {
+        _viewModel.ExerciceTime.Value = TimeSpan.FromSeconds(0);
+        _viewModel.BreakTime.Value = TimeSpan.FromSeconds(1);
+
+        _viewModel.StartExerciceCommand.Execute(null);
+
+        _chronoTimer.DidNotReceive().StartExercice(
+            Arg.Any<TimeSpan>(),
+            Arg.Any<TimeSpan>()
+        );
+        _navigator.DidNotReceive().GotoChronoTimer();
+    }
+    
+    [Fact]
+    public void ASelectedTimeIsZeroShouldDisplayError()
+    {
+        _viewModel.ExerciceTime.Value = TimeSpan.FromSeconds(0);
+        _viewModel.BreakTime.Value = TimeSpan.FromSeconds(1);
+
+        _viewModel.StartExerciceCommand.Execute(null);
+
+        _viewModel.Error.Should().Be("Time cannot be Zero");
+        _viewModel.IsErrorsVisible.Should().BeTrue();
+    }
+
+    [Fact]
     public void OnStartExerciceCommandShouldStartExercice()
     {
-        _viewModel.ExerciceTime = TimeSpan.FromSeconds(10);
-        _viewModel.BreakTime = TimeSpan.FromSeconds(1);
+        _viewModel.ExerciceTime.Value = TimeSpan.FromSeconds(10);
+        _viewModel.BreakTime.Value = TimeSpan.FromSeconds(1);
         _viewModel.StartExerciceCommand.Execute(null);
 
         _chronoTimer.Received().StartExercice(

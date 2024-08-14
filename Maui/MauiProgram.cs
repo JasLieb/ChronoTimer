@@ -1,7 +1,7 @@
 ﻿using System.Reactive.Concurrency;
 using ChronoTimer.Core.Services;
 using ChronoTimer.Core.Services.ChronoTimer;
-using ChronoTimer.Core.ViewModels;
+using ChronoTimer.Core.ViewModels.Setup;
 using ChronoTimer.Core.ViewModels.ChronoTimer;
 using ChronoTimer.Maui.Pages;
 using CommunityToolkit.Maui;

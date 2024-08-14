@@ -1,4 +1,4 @@
-﻿using ChronoTimer.Core.ViewModels;
+﻿using ChronoTimer.Core.ViewModels.Setup;
 
 namespace ChronoTimer.Maui.Pages;
 

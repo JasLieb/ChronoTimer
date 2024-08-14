@@ -11,8 +11,7 @@ public partial class TimePicker : ContentView
         BindableProperty.Create(
             nameof(SelectedTime),
             typeof(TimeSpan),
-            typeof(TimePicker),
-            new TimeSpan(0, 2, 30)
+            typeof(TimePicker)
         );
 
     public TimeSpan SelectedTime
@@ -24,10 +23,14 @@ public partial class TimePicker : ContentView
     public TimePicker()
     {
         InitializeComponent();
+        
         Minutes.ItemsSource = _availableMinOrSecs;
         Minutes.SelectedIndexChanged += new EventHandler(SelectedMinutesChanged);
+        Minutes.SelectedIndex = 2;
+
         Seconds.ItemsSource = _availableMinOrSecs;
         Seconds.SelectedIndexChanged += new EventHandler(SelectedSecondsChanged);
+        Seconds.SelectedIndex = 30;
     }
 
     private void SelectedSecondsChanged(object? sender, EventArgs e)

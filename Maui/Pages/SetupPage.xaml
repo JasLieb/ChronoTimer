@@ -9,8 +9,8 @@
 
     <VerticalStackLayout
         Padding="30,0"
-        Spacing="25"
-        VerticalOptions="Center"
+        Spacing="48"
+        VerticalOptions="CenterAndExpand"
         HorizontalOptions="Center">
         <Image
             Source="dotnet_bot.png"
@@ -34,7 +34,7 @@
                 SemanticProperties.Description="Exercise time :"/>
 
             <controls:TimePicker Grid.Column="2"
-                    SelectedTime="{Binding ExerciceTime, Mode=OneWayToSource}"/>
+                    SelectedTime="{Binding ExerciceTime.Value, Mode=OneWayToSource}"/>
 
         </Grid>
 
@@ -54,15 +54,27 @@
                 SemanticProperties.Description="Break time :"/>
 
             <controls:TimePicker Grid.Column="2"
-                    SelectedTime="{Binding BreakTime, Mode=OneWayToSource}"/>
+                SelectedTime="{Binding BreakTime.Value, Mode=OneWayToSource}"/>
 
         </Grid>
 
+        <Frame BackgroundColor="PaleVioletRed"
+                IsVisible="{Binding IsErrorsVisible}"
+                HorizontalOptions="CenterAndExpand" >
+            <Label FontSize="Medium" TextColor="WhiteSmoke">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Error : " />
+                        <Span Text="{Binding Error}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Frame>
+        
         <Button
             Text="Start Exercice"
             SemanticProperties.Hint="Start exercice following given time before"
             Command="{Binding StartExerciceCommand}"
-            HorizontalOptions="Fill"/>
+            HorizontalOptions="CenterAndExpand"/>
     </VerticalStackLayout>
-
 </ContentPage>
