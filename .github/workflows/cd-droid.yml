@@ -30,5 +30,4 @@ jobs:
     - name: Release
       uses: softprops/action-gh-release@v2.0.8
       with:
-          files: |
-          ./**/Release/**/*-Signed.apk
+        files: ./**/Release/**/*-Signed.apk
