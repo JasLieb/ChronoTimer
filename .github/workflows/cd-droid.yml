@@ -2,7 +2,6 @@ name: CD Droid Apk
 
 on:
   push:
-    branches: [ "main" ]
     tags:
       - "v*.*.*"
 
@@ -21,11 +20,7 @@ jobs:
       run: dotnet workload restore 
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-    - name: Build
+    - name: Build Release
       run: dotnet build Maui/ChronoTimer.Maui.csproj -c Release -f net8.0-android --no-restore
     - name: Release
       uses: softprops/action-gh-release@v2.0.8
