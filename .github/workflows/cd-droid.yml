@@ -7,7 +7,8 @@ on:
 
 jobs:
   build:
-
+    permissions:
+        contents: write
     runs-on: macos-latest
 
     steps:
@@ -26,3 +27,5 @@ jobs:
       uses: softprops/action-gh-release@v2.0.8
       with:
         files: ./**/Release/**/*-Signed.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
