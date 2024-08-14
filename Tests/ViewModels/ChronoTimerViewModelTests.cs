@@ -7,6 +7,7 @@ public class ChronoTimerViewModelTests
     private readonly Subject<ChronoState> _chronoStateSubject = new();
     private readonly IChronoTimer _chronoTimer;
     private readonly INavigator _navigator;
+    private readonly IDeviceOrientationService _deviceOrientation;
     private readonly ChronoTimerViewModel _viewModel;
 
     public ChronoTimerViewModelTests()
@@ -14,7 +15,16 @@ public class ChronoTimerViewModelTests
         _chronoTimer = Substitute.For<IChronoTimer>();
         _navigator = Substitute.For<INavigator>();
         _chronoTimer.Chrono.Returns(_chronoStateSubject);
-        _viewModel = new ChronoTimerViewModel(_chronoTimer, _navigator);
+        _deviceOrientation = Substitute.For<IDeviceOrientationService>();
+        _viewModel = new ChronoTimerViewModel(_chronoTimer, _navigator, _deviceOrientation);
+    }
+
+    [Fact]
+    public void OnAppearingShouldSetLandscapeOrientation()
+    {
+        _viewModel.OnAppearing();
+
+        _deviceOrientation.Received().SetLandscape();
     }
 
     [Fact]

@@ -4,21 +4,20 @@ namespace ChronoTimer.Maui;
 
 public partial class ChronoTimerPage : ContentPage
 {
-    private readonly DeviceOrientationService _deviceOrientationService;
+    private readonly ChronoTimerViewModel _chronoTimerViewModel;
 
-	public ChronoTimerPage(
-		ChronoTimerViewModel chronoTimerViewModel,
-		DeviceOrientationService deviceOrientationService
+    public ChronoTimerPage(
+		ChronoTimerViewModel chronoTimerViewModel
 	)
 	{
 		InitializeComponent();
 		BindingContext = chronoTimerViewModel;
-        _deviceOrientationService = deviceOrientationService;
+        _chronoTimerViewModel = chronoTimerViewModel;
     }
 
     protected override void OnAppearing()
     {
-		_deviceOrientationService.SetLandspace();
+		_chronoTimerViewModel.OnAppearing();
         base.OnAppearing();
     }
 }

@@ -1,11 +1,12 @@
 #if __IOS__
+using ChronoTimer.Core;
 using Foundation;
 using UIKit;
 #endif
 
 namespace ChronoTimer.Maui;
 
-public class DeviceOrientationService
+public class IOSDeviceOrientationService : IDeviceOrientationService
 {
     public void SetPortrait()
     {
@@ -14,7 +15,7 @@ public class DeviceOrientationService
         #endif
     }
     
-    public void SetLandspace()
+    public void SetLandscape()
     {
         #if __IOS__
             UpdateIosOrientation(UIInterfaceOrientationMask.Landscape);

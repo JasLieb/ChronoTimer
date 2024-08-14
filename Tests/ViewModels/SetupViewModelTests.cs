@@ -4,13 +4,23 @@ public class SetupViewModelTests
 {
     private readonly IChronoTimer _chronoTimer;
     private readonly INavigator _navigator;
+    private readonly IDeviceOrientationService _deviceOrientation;
     private readonly SetupViewModel _viewModel;
 
     public SetupViewModelTests()
     {
         _chronoTimer = Substitute.For<IChronoTimer>();
         _navigator = Substitute.For<INavigator>();
-        _viewModel = new SetupViewModel(_chronoTimer, _navigator);
+        _deviceOrientation = Substitute.For<IDeviceOrientationService>();
+        _viewModel = new SetupViewModel(_chronoTimer, _navigator, _deviceOrientation);
+    }
+
+    [Fact]
+    public void OnAppearingShouldSetPortraitOrientation()
+    {
+        _viewModel.OnAppearing();
+    
+        _deviceOrientation.Received().SetPortrait();
     }
 
     [Fact]

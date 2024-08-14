@@ -5,11 +5,13 @@ namespace ChronoTimer.Core;
 
 public partial class SetupViewModel(
     IChronoTimer chronoTimer,
-    INavigator navigator
+    INavigator navigator,
+    IDeviceOrientationService deviceOrientation
 ) : ObservableObject
 {
     private readonly IChronoTimer _chronoTimer = chronoTimer;
     private readonly INavigator _navigator = navigator;
+    private readonly IDeviceOrientationService _deviceOrientation = deviceOrientation;
 
     [ObservableProperty]
     private TimeSpan _exerciceTime = TimeSpan.FromSeconds(10);
@@ -25,5 +27,10 @@ public partial class SetupViewModel(
             BreakTime
         );
         _navigator.GotoChronoTimer();
+    }
+
+    public void OnAppearing()
+    {
+        _deviceOrientation.SetPortrait();
     }
 }

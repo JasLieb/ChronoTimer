@@ -23,12 +23,22 @@ public static class MauiProgram
 		builder.Logging.AddDebug();
 #endif
 
+#if __IOS__
+		builder.Services
+			.AddSingleton<IDeviceOrientationService, IOSDeviceOrientationService>();
+#elif __ANDROID__
+		builder.Services
+			.AddSingleton<IDeviceOrientationService, DroidDeviceOrientationService>();
+#else
+		builder.Services
+			.AddSingleton<IDeviceOrientationService, NullDeviceOrientationService>();
+#endif
+
 		builder.Services
 			.AddTransient<IScheduler>(_ => NewThreadScheduler.Default)
 			.AddSingleton<INavigator, ShellNavigatorService>()
 			.AddSingleton<IChronoTimer, ChronoTimerService>()
 			.AddSingleton<ISonificationPlayer, SonificationPlayer>()
-			.AddSingleton<DeviceOrientationService>()
 			.AddTransient<SetupPage>()
 			.AddSingleton<SetupViewModel>()
 			.AddTransient<ChronoTimerPage>()

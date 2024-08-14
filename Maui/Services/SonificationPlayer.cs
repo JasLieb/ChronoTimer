@@ -1,4 +1,3 @@
-using System;
 #if __IOS__
 using AVFoundation;
 #endif
