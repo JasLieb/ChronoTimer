@@ -28,7 +28,7 @@ jobs:
     - name: Build
       run: dotnet build Maui/ChronoTimer.Maui.csproj -c Release -f net8.0-android --no-restore
     - name: Release
-        uses: softprops/action-gh-release@v2.0.8
-        with:
+      uses: softprops/action-gh-release@v2.0.8
+      with:
           files: |
-            ./**/Release/**/*-Signed.apk
+          ./**/Release/**/*-Signed.apk
