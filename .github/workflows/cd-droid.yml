@@ -1,10 +1,10 @@
-name: CI Validation
+name: CD Droid Apk 
 
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -25,3 +25,10 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Build
+      run: dotnet build Maui/ChronoTimer.Maui.csproj -c Release -f net8.0-android --no-restore
+    - name: Release
+        uses: softprops/action-gh-release@v2.0.8
+        with:
+          files: |
+            ./**/Release/**/*-Signed.apk

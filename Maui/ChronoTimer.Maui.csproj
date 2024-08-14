@@ -22,10 +22,10 @@
 		<UseInterpreter>true</UseInterpreter>
 
 		<!-- Display name -->
-		<ApplicationTitle>ChronoTimer.Maui</ApplicationTitle>
+		<ApplicationTitle>ChronoTimer</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.chronotimer.maui</ApplicationId>
+		<ApplicationId>com.jaslieb.chronotimer.maui</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
