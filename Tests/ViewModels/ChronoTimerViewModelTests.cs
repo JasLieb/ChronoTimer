@@ -47,14 +47,14 @@ public class ChronoTimerViewModelTests
     public void ExerciceTimeShouldHaveRedColor()
     {
         _chronoStateSubject.OnNext(new(ChronoStates.ExerciceTime, TimeSpan.MaxValue));
-        _viewModel.TimerColor.Should().BeEquivalentTo(new RGB(254, 27, 0));
+        _viewModel.TimerColor.Should().BeEquivalentTo(new RGB(255, 107, 107));
     }
 
     [Fact]
     public void BreakTimeShouldHaveGreenColor()
     {
         _chronoStateSubject.OnNext(new(ChronoStates.BreakTime, TimeSpan.MaxValue));
-        _viewModel.TimerColor.Should().BeEquivalentTo(new RGB(0, 128, 0));
+        _viewModel.TimerColor.Should().BeEquivalentTo(new RGB(107, 203, 119));
     }
 
     [Fact]

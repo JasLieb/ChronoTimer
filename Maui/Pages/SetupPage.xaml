@@ -13,10 +13,12 @@
         VerticalOptions="CenterAndExpand"
         HorizontalOptions="Center">
         <Image
-            Source="dotnet_bot.png"
+            Source="{AppThemeBinding Light=app_logo_black.png, Dark=app_logo_white.png}"
             HeightRequest="185"
             Aspect="AspectFit"
-            SemanticProperties.Description="dot net bot in a race car number eight"/>
+            SemanticProperties.Description="chronoTimer logo">
+            
+        </Image>
 
         <Grid>
             <Grid.ColumnDefinitions>
@@ -58,10 +60,10 @@
 
         </Grid>
 
-        <Frame BackgroundColor="PaleVioletRed"
+        <Frame BackgroundColor="{x:StaticResource Secondary}"
                 IsVisible="{Binding IsErrorsVisible}"
                 HorizontalOptions="CenterAndExpand" >
-            <Label FontSize="Medium" TextColor="WhiteSmoke">
+            <Label FontSize="Medium" TextColor="{x:StaticResource SecondaryDarkText}">
                 <Label.FormattedText>
                     <FormattedString>
                         <Span Text="Error : " />
