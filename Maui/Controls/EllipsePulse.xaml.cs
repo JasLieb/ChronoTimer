@@ -6,6 +6,9 @@ public partial class EllipsePulse : ContentView
 {
 	private const string AninationName = "EllipseAnimation";
 
+    private (double Step, uint Length)[] _animationLengthSteps = [];
+    private uint _currentAnimationStepLength = 0;
+
 	public static readonly BindableProperty ChronoStateProperty = 
 		BindableProperty.Create(
 			nameof(ChronoState), 
@@ -37,12 +40,59 @@ public partial class EllipsePulse : ContentView
     {
         oldState ??= new();
         newState ??= new();
-
-		if(oldState.State != newState.State)
-			AnimateEllipse(newState);
-
+        
         UpdateEllipseVisibility(newState);
+
+        InitAnimatioLengthStepOnStateChanged(oldState, newState);
+
+        var oldAnimationLength = _currentAnimationStepLength;
+        
+        UpdateAnimatioLengthStep(newState);
+
+        if (
+            oldState.State != newState.State
+            || oldAnimationLength != _currentAnimationStepLength
+        )
+            AnimateEllipse(newState);
     }
+
+    private void InitAnimatioLengthStepOnStateChanged(ChronoState oldState, ChronoState newState)
+    {
+        var isExerciceStarted =
+            oldState.State is not ChronoStates.ExerciceTime
+            && newState.State is ChronoStates.ExerciceTime;
+
+        if (isExerciceStarted)
+        {
+            _animationLengthSteps = [
+                (newState.OriginalTime.Ticks * 0.75, 2500),
+                (newState.OriginalTime.Ticks * 0.5, 2000),
+                (newState.OriginalTime.Ticks * 0.25, 1500),
+                (0, 1000)
+            ];
+        }
+
+        var isBreakTimeStarted =
+            oldState.State is not ChronoStates.BreakTime
+            && newState.State is ChronoStates.BreakTime;
+
+        if (isBreakTimeStarted)
+        {
+            _animationLengthSteps = [
+                (newState.OriginalTime.Ticks * 0.75, 1500),
+                (newState.OriginalTime.Ticks * 0.5, 2000),
+                (newState.OriginalTime.Ticks * 0.25, 2500),
+                (0, 3000)
+            ];
+        }
+    }
+
+    private void UpdateAnimatioLengthStep(ChronoState newState) =>
+        _currentAnimationStepLength = 
+            _animationLengthSteps.FirstOrDefault(
+                animationStep => newState.RemainingTime.Ticks >= animationStep.Step
+            )
+            .Length;
 
     private void UpdateEllipseVisibility(ChronoState chronoState)
     {
@@ -51,12 +101,15 @@ public partial class EllipsePulse : ContentView
         thirdEllipse.IsVisible = chronoState.State is ChronoStates.ExerciceTime;
     }
 
-	private void AnimateEllipse(ChronoState newState)
+	private void AnimateEllipse(ChronoState chronoState)
     {
 		container.AbortAnimation(AninationName);
 
-		var baseTime = newState.State is ChronoStates.ExerciceTime 
-            ? (uint)2000 
+        if(chronoState.State is ChronoStates.NotStarted)
+            return;
+
+		var baseTime = chronoState.State is ChronoStates.ExerciceTime 
+            ? _currentAnimationStepLength
             : 3000;
 
 		container.Animate(
