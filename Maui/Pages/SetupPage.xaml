@@ -10,69 +10,62 @@
     <VerticalStackLayout
         Padding="30,0"
         Spacing="48"
-        VerticalOptions="CenterAndExpand"
-        HorizontalOptions="Center">
+        VerticalOptions="Center"
+        HorizontalOptions="FillAndExpand">
         <Image
             Source="{AppThemeBinding Light=app_logo_black.png, Dark=app_logo_white.png}"
             HeightRequest="185"
             Aspect="AspectFit"
-            SemanticProperties.Description="chronoTimer logo">
-            
-        </Image>
+            SemanticProperties.Description="chronoTimer logo"/>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="24"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Frame
+            HorizontalOptions="Center"
+            BorderColor="{x:StaticResource Gray500}">
+            <VerticalStackLayout Spacing="24">
+                <Label
+                    Text="Exercise time :"
+                    FontSize="Medium"
+                    HorizontalOptions="Center"
+                    SemanticProperties.Description="Exercise time :"/>
 
-            <Label
-                Grid.ColumnSpan="2"
-                Text="Exercise time :"
-                FontSize="Medium"
-                VerticalOptions="Center"
-                HorizontalOptions="Start"
-                SemanticProperties.Description="Exercise time :"/>
-
-            <controls:TimePicker Grid.Column="2"
+                <controls:TimePicker
+                    HorizontalOptions="Center"
                     SelectedTime="{Binding ExerciceTime.Value, Mode=OneWayToSource}"/>
+            </VerticalStackLayout>
+        </Frame>
 
-        </Grid>
+        <Frame
+            HorizontalOptions="Center"
+            BorderColor="{x:StaticResource Gray500}">
+            <VerticalStackLayout Spacing="24">
+                <Label
+                    Text="Break time :"
+                    FontSize="Medium"
+                    HorizontalOptions="Center"
+                    SemanticProperties.Description="Break time :"/>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="24"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+                <controls:TimePicker
+                    SelectedTime="{Binding BreakTime.Value, Mode=OneWayToSource}"
+                    HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+        </Frame>
 
+        <Frame
+            BackgroundColor="{x:StaticResource Secondary}"
+            IsVisible="{Binding IsErrorsVisible}"
+            HorizontalOptions="CenterAndExpand">
             <Label
-                Grid.ColumnSpan="2"
-                Text="Break time :"
                 FontSize="Medium"
-                VerticalOptions="Center"
-                HorizontalOptions="Start"
-                SemanticProperties.Description="Break time :"/>
-
-            <controls:TimePicker Grid.Column="2"
-                SelectedTime="{Binding BreakTime.Value, Mode=OneWayToSource}"/>
-
-        </Grid>
-
-        <Frame BackgroundColor="{x:StaticResource Secondary}"
-                IsVisible="{Binding IsErrorsVisible}"
-                HorizontalOptions="CenterAndExpand" >
-            <Label FontSize="Medium" TextColor="{x:StaticResource SecondaryDarkText}">
+                TextColor="{x:StaticResource SecondaryDarkText}">
                 <Label.FormattedText>
                     <FormattedString>
-                        <Span Text="Error : " />
-                        <Span Text="{Binding Error}" />
+                        <Span Text="Error : "/>
+                        <Span Text="{Binding Error}"/>
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
         </Frame>
-        
+
         <Button
             Text="Start Exercice"
             SemanticProperties.Hint="Start exercice following given time before"

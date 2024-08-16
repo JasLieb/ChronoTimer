@@ -4,18 +4,27 @@
              xmlns:controls="clr-namespace:ChronoTimer.Maui.Controls"
              x:Class="ChronoTimer.Maui.Pages.ChronoTimerPage"
              Shell.NavBarIsVisible="False">
-    <Grid>
+    <Grid 
+        x:Name="PageContainer"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <controls:ChronoTimer Grid.RowSpan="2" ChronoState="{Binding ChronoState}"/>
+
+        <controls:ChronoTimer
+            x:Name="ChronoTimer"
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            VerticalOptions="Fill"
+            HorizontalOptions="Fill"
+            ChronoState="{Binding ChronoState}"/>
 
         <Button
             Grid.Row="1"
             Margin="12"
-            HorizontalOptions="CenterAndExpand" 
+            HorizontalOptions="CenterAndExpand"
             Text="Change Setup"
             Command="{Binding GotoSetupPageCommand}"/>
     </Grid>
