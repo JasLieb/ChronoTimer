@@ -37,27 +37,6 @@ public class ChronoTimerViewModelTests
     }
 
     [Fact]
-    public void NotStartedShouldDisplayGotoSetUpButton()
-    {
-        _chronoStateSubject.OnNext(new());
-        _viewModel.TimerColor.Should().BeNull();
-    }
-
-    [Fact]
-    public void ExerciceTimeShouldHaveRedColor()
-    {
-        _chronoStateSubject.OnNext(new(ChronoStates.ExerciceTime, TimeSpan.MaxValue));
-        _viewModel.TimerColor.Should().BeEquivalentTo(new RGB(255, 107, 107));
-    }
-
-    [Fact]
-    public void BreakTimeShouldHaveGreenColor()
-    {
-        _chronoStateSubject.OnNext(new(ChronoStates.BreakTime, TimeSpan.MaxValue));
-        _viewModel.TimerColor.Should().BeEquivalentTo(new RGB(107, 203, 119));
-    }
-
-    [Fact]
     public void ExecuteGotoSetupPageCommandShouldGStopTimer()
     {
         _viewModel.GotoSetupPageCommand.Execute(null);

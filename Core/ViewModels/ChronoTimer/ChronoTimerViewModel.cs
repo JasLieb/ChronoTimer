@@ -1,4 +1,5 @@
 ﻿using ChronoTimer.Core.Models;
+using ChronoTimer.Core.Providers;
 using ChronoTimer.Core.Services;
 using ChronoTimer.Core.Services.ChronoTimer;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,9 +15,6 @@ public partial class ChronoTimerViewModel : ObservableObject, IDisposable
     private readonly IDeviceOrientationService _deviceOrientation;
     [ObservableProperty]
     private ChronoState _chronoState = new();
-
-    [ObservableProperty]
-    private RGB? _timerColor;
 
     public ChronoTimerViewModel(
         IChronoTimer chronoTimer,
@@ -38,11 +36,8 @@ public partial class ChronoTimerViewModel : ObservableObject, IDisposable
         _navigator.GotoSetup();
     }
 
-    private void UpdateViewModelState(ChronoState chrono)
-    {
+    private void UpdateViewModelState(ChronoState chrono) =>
         ChronoState = chrono;
-        TimerColor = ColorProvider.GetStateColor(chrono.State);
-    }
 
     public void OnAppearing() =>
         _deviceOrientation.SetLandscape();

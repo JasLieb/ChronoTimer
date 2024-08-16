@@ -55,14 +55,14 @@ public partial class EllipsePulse : ContentView
     {
 		container.AbortAnimation(AninationName);
 
-		var originalTime = newState.OriginalTime ?? TimeSpan.Zero;
-		var remainingTime = newState.RemainingTime ?? TimeSpan.Zero;
-		var baseTime = newState.State is ChronoStates.ExerciceTime ? 2000 : 3000;
+		var baseTime = newState.State is ChronoStates.ExerciceTime 
+            ? (uint)2000 
+            : 3000;
 
 		container.Animate(
 			AninationName,
 			MakeEllipseAnimation(),
-			length: (uint)baseTime,
+			length: baseTime,
 			easing: Easing.Linear,
 			repeat: () => true
 		);

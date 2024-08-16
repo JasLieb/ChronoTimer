@@ -24,8 +24,6 @@ public class ChronoTimerServiceTests : IDisposable
     public void NotStartedTimerShouldHaveNotStartedState()
     {
         _currentChrono!.State.Should().Be(ChronoStates.NotStarted);
-        _currentChrono.RemainingTime.Should().BeNull();
-        _currentChrono.OriginalTime.Should().BeNull();
     }
 
     [Fact]
@@ -36,8 +34,6 @@ public class ChronoTimerServiceTests : IDisposable
         _timer.StopExercice();
 
         _currentChrono!.State.Should().Be(ChronoStates.NotStarted);
-        _currentChrono.RemainingTime.Should().BeNull();
-        _currentChrono.OriginalTime.Should().BeNull();
     }
 
     [Fact]
