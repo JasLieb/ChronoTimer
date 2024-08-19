@@ -3,7 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using ChronoTimer.Core.Services.ChronoTimer;
 using ChronoTimer.Core.Services;
 using ChronoTimer.Core.ViewModels.Validation;
-using System.Collections.ObjectModel;
 
 namespace ChronoTimer.Core.ViewModels.Setup;
 
@@ -47,6 +46,10 @@ public partial class SetupViewModel(
         );
         _navigator.GotoChronoTimer();
     }
+
+    [RelayCommand]
+    public void ChangeChronoType() =>
+        _navigator.GotoSelection();
 
     public void OnAppearing()
     {

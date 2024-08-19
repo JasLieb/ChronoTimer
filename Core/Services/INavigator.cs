@@ -5,4 +5,6 @@ public interface INavigator
     void GotoChronoTimer();
 
     void GotoSetup();
+    
+    void GotoSelection();
 }

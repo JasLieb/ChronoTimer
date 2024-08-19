@@ -179,17 +179,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="BigChronoTimerLabel" TargetType="Label">
-        <Setter Property="FontSize">
-            <OnPlatform x:TypeArguments="x:Double">
-                <On Platform="iOS, Android"
-                        Value="128"/>
-                <On Platform="MacCatalyst, WinUI"
-                        Value="384"/>
-            </OnPlatform>
-        </Setter>
-    </Style>
-
     <Style TargetType="Span">
         <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
     </Style>

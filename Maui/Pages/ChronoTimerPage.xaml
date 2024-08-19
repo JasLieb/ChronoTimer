@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:ChronoTimer.Maui.Controls"
-             x:Class="ChronoTimer.Maui.Pages.ChronoTimerPage"
-             Shell.NavBarIsVisible="False">
-    <Grid 
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ChronoTimer.Maui.Controls"
+    x:Class="ChronoTimer.Maui.Pages.ChronoTimerPage"
+    Shell.NavBarIsVisible="False">
+    <Grid
         x:Name="PageContainer"
         HorizontalOptions="FillAndExpand"
         VerticalOptions="FillAndExpand">

@@ -3,7 +3,9 @@ using ChronoTimer.Core.Services;
 using ChronoTimer.Core.Services.ChronoTimer;
 using ChronoTimer.Core.ViewModels.Setup;
 using ChronoTimer.Core.ViewModels.ChronoTimer;
+using ChronoTimer.Core.ViewModels.ChronoSelection;
 using ChronoTimer.Maui.Pages;
+using ChronoTimer.Maui.Services;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
@@ -43,6 +45,8 @@ public static class MauiProgram
 			.AddSingleton<INavigator, ShellNavigatorService>()
 			.AddSingleton<IChronoTimer, ChronoTimerService>()
 			.AddSingleton<ISonificationPlayer, SonificationPlayer>()
+			.AddTransient<ChronoSelectionPage>()
+			.AddSingleton<ChronoSelectionViewModel>()
 			.AddTransient<SetupPage>()
 			.AddSingleton<SetupViewModel>()
 			.AddTransient<ChronoTimerPage>()

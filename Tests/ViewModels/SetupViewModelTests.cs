@@ -72,4 +72,12 @@ public class SetupViewModelTests
         );
         _navigator.Received().GotoChronoTimer();
     }
+
+    [Fact]
+    public void OnChangeChronoTypeCommandShouldGotoSelection()
+    {
+        _viewModel.ChangeChronoTypeCommand.Execute(null);
+
+        _navigator.Received().GotoSelection();
+    }
 }

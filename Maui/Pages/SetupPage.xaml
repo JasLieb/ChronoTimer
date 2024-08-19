@@ -12,11 +12,8 @@
         Spacing="48"
         VerticalOptions="Center"
         HorizontalOptions="FillAndExpand">
-        <Image
-            Source="{AppThemeBinding Light=app_logo_black.png, Dark=app_logo_white.png}"
-            HeightRequest="185"
-            Aspect="AspectFit"
-            SemanticProperties.Description="chronoTimer logo"/>
+        
+        <Image Style="{x:StaticResource AppLogo}"/>
 
         <Frame
             HorizontalOptions="Center"
@@ -70,6 +67,12 @@
             Text="Start Exercice"
             SemanticProperties.Hint="Start exercice following given time before"
             Command="{Binding StartExerciceCommand}"
+            HorizontalOptions="CenterAndExpand"/>
+        
+        <Button
+            Text="Change Chrono"
+            SemanticProperties.Hint="Change chrono type"
+            Command="{Binding ChangeChronoTypeCommand}"
             HorizontalOptions="CenterAndExpand"/>
     </VerticalStackLayout>
 </ContentPage>

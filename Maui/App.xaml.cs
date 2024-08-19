@@ -18,7 +18,7 @@ public partial class App : Application
 
 	protected override async void OnStart()
 	{
-		_navigator.GotoSetup();
+		base.OnStart();
         
 		PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.Media>();
 		if (status != PermissionStatus.Granted)
@@ -26,7 +26,6 @@ public partial class App : Application
 			status = await Permissions.RequestAsync<Permissions.Media>();
 		}
         
-		base.OnStart();
-
+		_navigator.GotoSelection();
 	}
 }

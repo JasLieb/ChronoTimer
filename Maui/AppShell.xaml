@@ -7,6 +7,10 @@
     Shell.FlyoutBehavior="Disabled"
     Title="ChronoTimer">
     <ShellContent
+        ContentTemplate="{DataTemplate pages:ChronoSelectionPage}"
+        Route="selection" />
+
+    <ShellContent
         ContentTemplate="{DataTemplate pages:SetupPage}"
         Route="setup" />
 
