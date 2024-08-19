@@ -1,18 +1,19 @@
 ﻿using ChronoTimer.Core.Models;
-using ChronoTimer.Core.Providers;
 using ChronoTimer.Core.Services;
 using ChronoTimer.Core.Services.ChronoTimer;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ChronoTimer.Core.Models.Requests;
 
 namespace ChronoTimer.Core.ViewModels.ChronoTimer;
 
-public partial class ChronoTimerViewModel : ObservableObject, IDisposable
+public partial class ChronoTimerViewModel : ObservableObject, IDisposable, IQueryAttributable
 {
     private readonly IDisposable _chronoStateSubscription;
     private readonly IChronoTimer _chronoTimer;
     private readonly INavigator _navigator;
     private readonly IDeviceOrientationService _deviceOrientation;
+    
     [ObservableProperty]
     private ChronoState _chronoState = new();
 
@@ -28,19 +29,28 @@ public partial class ChronoTimerViewModel : ObservableObject, IDisposable
         _chronoStateSubscription =
             chronoTimer.Chrono.Subscribe(UpdateViewModelState);
     }
+    
+    public void ApplyQueryAttributes(IDictionary<string, object> query) 
+    {
+        _deviceOrientation.SetLandscape();
+        if (
+            query.TryGetValue("request", out var value) 
+            && value is ExerciceRequest request
+        )
+        {
+            _chronoTimer.StartExercice(request.ExerciceTime, request.BreakTime);
+        }
+    }
 
     [RelayCommand]
-    private void GotoSetupPage()
+    private void GotoExerciceSetupPage()
     {
         _chronoTimer.StopExercice();
-        _navigator.GotoSetup();
+        _navigator.GotoExerciceSetup();
     }
 
     private void UpdateViewModelState(ChronoState chrono) =>
         ChronoState = chrono;
-
-    public void OnAppearing() =>
-        _deviceOrientation.SetLandscape();
 
     public void Dispose() =>
         _chronoStateSubscription.Dispose();

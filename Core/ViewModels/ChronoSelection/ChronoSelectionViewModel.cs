@@ -4,16 +4,17 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace ChronoTimer.Core.ViewModels.ChronoSelection;
 
-public partial class ChronoSelectionViewModel : ObservableObject
+public partial class ChronoSelectionViewModel(
+    INavigator navigator
+) : ObservableObject
 {
-    private readonly INavigator _navigator;
-
-    public ChronoSelectionViewModel(INavigator navigator) 
-    {
-        _navigator = navigator;
-    }
+    private readonly INavigator _navigator = navigator;
 
     [RelayCommand]
     public void SelectExercice() =>
-        _navigator.GotoSetup();
+        _navigator.GotoExerciceSetup();
+    
+    [RelayCommand]
+    public void SelectChess() =>
+        _navigator.GotoChessSetup();
 }

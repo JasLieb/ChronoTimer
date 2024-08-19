@@ -2,9 +2,8 @@
 
 public interface INavigator
 {
-    void GotoChronoTimer();
-
-    void GotoSetup();
-    
     void GotoSelection();
+    void GotoExerciceSetup();
+    void GotoChessSetup();
+    void GotoChronoTimer(Models.Requests.ExerciceRequest exerciceRequest);
 }

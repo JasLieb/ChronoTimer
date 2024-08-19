@@ -9,4 +9,4 @@ global using ChronoTimer.Core.Services;
 global using ChronoTimer.Core.Services.ChronoTimer;
 global using ChronoTimer.Core.ViewModels.ChronoSelection;
 global using ChronoTimer.Core.ViewModels.ChronoTimer;
-global using ChronoTimer.Core.ViewModels.Setup;
+global using ChronoTimer.Core.ViewModels.Setups;

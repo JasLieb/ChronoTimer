@@ -1,18 +1,18 @@
-﻿namespace ChronoTimer.Tests.ViewModels;
+﻿using ChronoTimer.Core.Models.Requests;
 
-public class SetupViewModelTests
+namespace ChronoTimer.Tests.ViewModels.Setups;
+
+public class ExerciceSetupViewModelTests
 {
-    private readonly IChronoTimer _chronoTimer;
     private readonly INavigator _navigator;
     private readonly IDeviceOrientationService _deviceOrientation;
-    private readonly SetupViewModel _viewModel;
+    private readonly ExerciceSetupViewModel _viewModel;
 
-    public SetupViewModelTests()
+    public ExerciceSetupViewModelTests()
     {
-        _chronoTimer = Substitute.For<IChronoTimer>();
         _navigator = Substitute.For<INavigator>();
         _deviceOrientation = Substitute.For<IDeviceOrientationService>();
-        _viewModel = new SetupViewModel(_chronoTimer, _navigator, _deviceOrientation);
+        _viewModel = new ExerciceSetupViewModel(_navigator, _deviceOrientation);
     }
 
     [Fact]
@@ -40,11 +40,7 @@ public class SetupViewModelTests
 
         _viewModel.StartExerciceCommand.Execute(null);
 
-        _chronoTimer.DidNotReceive().StartExercice(
-            Arg.Any<TimeSpan>(),
-            Arg.Any<TimeSpan>()
-        );
-        _navigator.DidNotReceive().GotoChronoTimer();
+        _navigator.DidNotReceive().GotoChronoTimer(Arg.Any<ExerciceRequest>());
     }
     
     [Fact]
@@ -62,15 +58,20 @@ public class SetupViewModelTests
     [Fact]
     public void OnStartExerciceCommandShouldStartExercice()
     {
-        _viewModel.ExerciceTime.Value = TimeSpan.FromSeconds(10);
-        _viewModel.BreakTime.Value = TimeSpan.FromSeconds(1);
+        var exerciceTime = TimeSpan.FromSeconds(10);
+        _viewModel.ExerciceTime.Value = exerciceTime;
+        var breakTime = TimeSpan.FromSeconds(1);
+        _viewModel.BreakTime.Value = breakTime;
+        
         _viewModel.StartExerciceCommand.Execute(null);
-
-        _chronoTimer.Received().StartExercice(
-            TimeSpan.FromSeconds(10),
-            TimeSpan.FromSeconds(1)
+        
+        _navigator.Received().GotoChronoTimer(
+            Arg.Is<ExerciceRequest>(
+                request => 
+                    request.ExerciceTime == exerciceTime
+                    && request.BreakTime == breakTime
+            )
         );
-        _navigator.Received().GotoChronoTimer();
     }
 
     [Fact]

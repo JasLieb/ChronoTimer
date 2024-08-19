@@ -1,18 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
-using ChronoTimer.Core.Services.ChronoTimer;
 using ChronoTimer.Core.Services;
 using ChronoTimer.Core.ViewModels.Validation;
 
-namespace ChronoTimer.Core.ViewModels.Setup;
+namespace ChronoTimer.Core.ViewModels.Setups;
 
-public partial class SetupViewModel(
-    IChronoTimer chronoTimer,
+public partial class ExerciceSetupViewModel(
     INavigator navigator,
     IDeviceOrientationService deviceOrientation
 ) : ObservableObject
 {
-    private readonly IChronoTimer _chronoTimer = chronoTimer;
     private readonly INavigator _navigator = navigator;
     private readonly IDeviceOrientationService _deviceOrientation = deviceOrientation;
 
@@ -39,12 +36,13 @@ public partial class SetupViewModel(
             DisplayErrors();
             return;
         }
-
-        _chronoTimer.StartExercice(
-            ExerciceTime.Value,
-            BreakTime.Value
+        
+        _navigator.GotoChronoTimer(
+            new(
+                ExerciceTime.Value,
+                BreakTime.Value
+            )
         );
-        _navigator.GotoChronoTimer();
     }
 
     [RelayCommand]

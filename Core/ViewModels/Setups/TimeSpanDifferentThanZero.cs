@@ -1,6 +1,6 @@
 using ChronoTimer.Core.ViewModels.Validation;
 
-namespace ChronoTimer.Core.ViewModels.Setup;
+namespace ChronoTimer.Core.ViewModels.Setups;
 
 public class TimeSpanDifferentThanZero : IValidationRule<TimeSpan>
 {

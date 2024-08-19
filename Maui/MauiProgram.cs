@@ -1,7 +1,7 @@
 ﻿using System.Reactive.Concurrency;
 using ChronoTimer.Core.Services;
 using ChronoTimer.Core.Services.ChronoTimer;
-using ChronoTimer.Core.ViewModels.Setup;
+using ChronoTimer.Core.ViewModels.Setups;
 using ChronoTimer.Core.ViewModels.ChronoTimer;
 using ChronoTimer.Core.ViewModels.ChronoSelection;
 using ChronoTimer.Maui.Pages;
@@ -47,8 +47,10 @@ public static class MauiProgram
 			.AddSingleton<ISonificationPlayer, SonificationPlayer>()
 			.AddTransient<ChronoSelectionPage>()
 			.AddSingleton<ChronoSelectionViewModel>()
-			.AddTransient<SetupPage>()
-			.AddSingleton<SetupViewModel>()
+			.AddTransient<ExerciceSetupPage>()
+			.AddSingleton<ExerciceSetupViewModel>()
+			.AddTransient<ChessSetupPage>()
+			.AddTransient<ChessSetupViewModel>()
 			.AddTransient<ChronoTimerPage>()
 			.AddSingleton<ChronoTimerViewModel>();
 

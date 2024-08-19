@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="ChronoTimer.Maui.Pages.ChessSetupPage">
+    <VerticalStackLayout
+        Padding="30,0"
+        Spacing="48"
+        VerticalOptions="Center"
+        HorizontalOptions="FillAndExpand">
+        
+        <Image Style="{x:StaticResource AppLogo}"/>
+
+        <!-- <Frame
+            HorizontalOptions="Center"
+            BorderColor="{x:StaticResource Gray500}">
+            <VerticalStackLayout Spacing="24">
+                <Label
+                    Text="Exercise time :"
+                    FontSize="Medium"
+                    HorizontalOptions="Center"
+                    SemanticProperties.Description="Exercise time :"/>
+
+                <controls:TimePicker
+                    HorizontalOptions="Center"
+                    SelectedTime="{Binding ExerciceTime.Value, Mode=OneWayToSource}"/>
+            </VerticalStackLayout>
+        </Frame> -->
+
+        <!-- <Frame
+            BackgroundColor="{x:StaticResource Secondary}"
+            IsVisible="{Binding IsErrorsVisible}"
+            HorizontalOptions="CenterAndExpand">
+            <Label
+                FontSize="Medium"
+                TextColor="{x:StaticResource SecondaryDarkText}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Error : "/>
+                        <Span Text="{Binding Error}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </Frame> -->
+
+        <!-- <Button
+            Text="Play"
+            SemanticProperties.Hint="Start chess game with given time before"
+            Command="{Binding StartExerciceCommand}"
+            HorizontalOptions="CenterAndExpand"/> -->
+        
+        <Button
+            Text="Change Chrono"
+            SemanticProperties.Hint="Change chrono type"
+            Command="{Binding ChangeChronoTypeCommand}"
+            HorizontalOptions="CenterAndExpand"/>
+    </VerticalStackLayout>
+</ContentPage>

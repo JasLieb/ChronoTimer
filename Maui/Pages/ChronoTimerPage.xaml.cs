@@ -19,12 +19,6 @@ public partial class ChronoTimerPage : ContentPage
         );
     }
 
-    protected override void OnAppearing()
-    {
-        _chronoTimerViewModel.OnAppearing();
-        base.OnAppearing();
-    }
-
     private void UpdatePageBackgroundColor(Color currentColor) => 
         MainThread.BeginInvokeOnMainThread(
             async () =>

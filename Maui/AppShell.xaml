@@ -11,8 +11,12 @@
         Route="selection" />
 
     <ShellContent
-        ContentTemplate="{DataTemplate pages:SetupPage}"
-        Route="setup" />
+        ContentTemplate="{DataTemplate pages:ExerciceSetupPage}"
+        Route="exerciceSetup" />
+    
+    <ShellContent
+        ContentTemplate="{DataTemplate pages:ChessSetupPage}"
+        Route="chessSetup" />
 
     <ShellContent
         ContentTemplate="{DataTemplate pages:ChronoTimerPage}"

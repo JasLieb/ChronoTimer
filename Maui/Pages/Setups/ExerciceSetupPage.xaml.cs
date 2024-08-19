@@ -1,15 +1,15 @@
 ﻿using ChronoTimer.Core.ViewModels.ChronoSelection;
-using ChronoTimer.Core.ViewModels.Setup;
+using ChronoTimer.Core.ViewModels.Setups;
 
 namespace ChronoTimer.Maui.Pages;
 
-public partial class SetupPage : ContentPage
+public partial class ExerciceSetupPage : ContentPage
 {
-    private readonly SetupViewModel _setupViewModel;
+    private readonly ExerciceSetupViewModel _setupViewModel;
 
-    public SetupPage(
+    public ExerciceSetupPage(
         ChronoSelectionViewModel chronoSelectionViewModel,
-        SetupViewModel setupViewModel
+        ExerciceSetupViewModel setupViewModel
     )
     {
         InitializeComponent();

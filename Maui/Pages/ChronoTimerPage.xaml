@@ -27,6 +27,6 @@
             Margin="12"
             HorizontalOptions="CenterAndExpand"
             Text="Change Setup"
-            Command="{Binding GotoSetupPageCommand}"/>
+            Command="{Binding GotoExerciceSetupPageCommand}"/>
     </Grid>
 </ContentPage>

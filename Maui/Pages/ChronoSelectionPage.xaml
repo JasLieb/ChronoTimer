@@ -14,5 +14,9 @@
         <Button 
             Text="Make exercice"
             Command="{Binding SelectExerciceCommand}" />
+        
+        <Button 
+            Text="Play chess"
+            Command="{Binding SelectChessCommand}" />
     </VerticalStackLayout>
 </ContentPage>

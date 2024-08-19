@@ -12,9 +12,16 @@ public class ChronoSelectionViewModelTests
     }
 
     [Fact]
-    public void TriggerSelectExcerciceCommandShouldGotoSetup()
+    public void TriggerSelectExcerciceCommandShouldGotoExerciceSetup()
     {
         _viewModel.SelectExerciceCommand.Execute(null);
-        _navigator.Received().GotoSetup();
+        _navigator.Received().GotoExerciceSetup();
+    }
+    
+    [Fact]
+    public void TriggerSelectChessCommandShouldGotoChessSetup()
+    {
+        _viewModel.SelectChessCommand.Execute(null);
+        _navigator.Received().GotoChessSetup();
     }
 }

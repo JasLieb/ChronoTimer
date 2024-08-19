@@ -1,4 +1,6 @@
-﻿namespace ChronoTimer.Tests.ViewModels;
+﻿using ChronoTimer.Core.Models.Requests;
+
+namespace ChronoTimer.Tests.ViewModels;
 
 public class ChronoTimerViewModelTests
 {
@@ -18,11 +20,29 @@ public class ChronoTimerViewModelTests
     }
 
     [Fact]
-    public void OnAppearingShouldSetLandscapeOrientation()
+    public void OnApplyQueryAttributesShouldSetLandscapeOrientation()
     {
-        _viewModel.OnAppearing();
+        _viewModel.ApplyQueryAttributes(new Dictionary<string, object>());
 
         _deviceOrientation.Received().SetLandscape();
+    }
+    
+    [Fact]
+    public void OnApplyQueryAttributesShouldStartExercice()
+    {
+        var exerciceTime = TimeSpan.FromSeconds(10);
+        var breakTime = TimeSpan.FromSeconds(1);
+        var exerciceArgs = new Dictionary<string, object>()
+        {
+            { "request", new ExerciceRequest(exerciceTime, breakTime)},
+        };
+
+        _viewModel.ApplyQueryAttributes(exerciceArgs);
+
+        _chronoTimer.Received().StartExercice(
+            exerciceTime,
+            breakTime
+        );
     }
 
     [Fact]
@@ -37,16 +57,16 @@ public class ChronoTimerViewModelTests
     }
 
     [Fact]
-    public void ExecuteGotoSetupPageCommandShouldGStopTimer()
+    public void ExecuteGotoExerciceSetupPageCommandShouldGStopTimer()
     {
-        _viewModel.GotoSetupPageCommand.Execute(null);
+        _viewModel.GotoExerciceSetupPageCommand.Execute(null);
         _chronoTimer.Received().StopExercice();
     }
 
     [Fact]
-    public void ExecuteGotoSetupPageCommandShouldGotoSetup()
+    public void ExecuteGotoExerciceSetupPageCommandShouldGotoExerciceSetup()
     {
-        _viewModel.GotoSetupPageCommand.Execute(null);
-        _navigator.Received().GotoSetup();
+        _viewModel.GotoExerciceSetupPageCommand.Execute(null);
+        _navigator.Received().GotoExerciceSetup();
     }
 }
