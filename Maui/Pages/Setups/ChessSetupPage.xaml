@@ -2,15 +2,19 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ChronoTimer.Maui.Controls"
     x:Class="ChronoTimer.Maui.Pages.ChessSetupPage">
     <VerticalStackLayout
         Padding="30,0"
         Spacing="48"
         VerticalOptions="Center"
         HorizontalOptions="FillAndExpand">
-        
-        <Image Style="{x:StaticResource AppLogo}"/>
 
+        <Image Style="{x:StaticResource AppLogo}"/>
+        <controls:TimePicker
+            HorizontalOptions="Center"
+            Text="Player time :"
+            SelectedTime="{Binding TimePerPlayer.Value, Mode=OneWayToSource}"/>
         <!-- <Frame
             HorizontalOptions="Center"
             BorderColor="{x:StaticResource Gray500}">
@@ -48,7 +52,7 @@
             SemanticProperties.Hint="Start chess game with given time before"
             Command="{Binding StartExerciceCommand}"
             HorizontalOptions="CenterAndExpand"/> -->
-        
+
         <Button
             Text="Change Chrono"
             SemanticProperties.Hint="Change chrono type"

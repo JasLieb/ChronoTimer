@@ -4,6 +4,8 @@ using UIKit;
 
 namespace ChronoTimer.Maui.Platforms.iOS.Services;
 
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "Version 16.0 already checked")]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1422:Validate platform compatibility", Justification = "Version 16.0 already checked")]
 public class IOSDeviceOrientationService : IDeviceOrientationService
 {
     public void SetPortrait()
@@ -15,7 +17,7 @@ public class IOSDeviceOrientationService : IDeviceOrientationService
     {
         UpdateIosOrientation(UIInterfaceOrientationMask.Landscape);
     }
-    
+
     private void UpdateIosOrientation(UIInterfaceOrientationMask orientationMask)
     {
         if (UIDevice.CurrentDevice.CheckSystemVersion(16, 0))
@@ -29,7 +31,6 @@ public class IOSDeviceOrientationService : IDeviceOrientationService
                 var nav = UIApplication.SharedApplication.KeyWindow?.RootViewController;
                 if (nav != null)
                 {
-                    // Tell the os that we changed orientations so it knows to call GetSupportedInterfaceOrientations again
                     nav.SetNeedsUpdateOfSupportedInterfaceOrientations();
 
                     windowScene.RequestGeometryUpdate(
