@@ -14,26 +14,21 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- <controls:ChronoTimer
-            x:Name="ChronoTimer"
-            Grid.RowSpan="2"
-            Grid.ColumnSpan="2"
-            VerticalOptions="Fill"
-            HorizontalOptions="Fill"
-            ChronoState="{Binding ChronoState}"/> -->
-        <Button 
+        <controls:ChronoTimer
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
-            Text="{Binding ChronoState.RemainingTimeFirstPlayer}"
             IsEnabled="{Binding IsFirstPlayerEnabled}"
-            Command="{Binding NextPlayerCommand}" />
-        <Button 
+            OnTapCommand="{Binding NextPlayerCommand}"
+            ChronoState="{Binding FirstPlayerChronoState}"/>
+
+        <controls:ChronoTimer
             Grid.Row="1"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
-            Text="{Binding ChronoState.RemainingTimeSecondPlayer}"
             IsEnabled="{Binding IsSecondPlayerEnabled}"
-            Command="{Binding NextPlayerCommand}" />
+            OnTapCommand="{Binding NextPlayerCommand}"
+            ChronoState="{Binding SecondPlayerChronoState}"/>
+
         <Button
             Grid.Row="2"
             Margin="12"

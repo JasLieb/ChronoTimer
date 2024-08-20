@@ -33,15 +33,12 @@ public class ColorProvider
             new (109, 202, 123)
         ];
 
-    public static RGB? GetStateColor(ExerciceChronoState chrono) =>
-        chrono.State switch
-        {
-            ExerciceChronoStates.ExerciceTime => GetRBGFromSerie(s_redSerie, chrono),
-            ExerciceChronoStates.BreakTime => GetRBGFromSerie(s_greenSerie, chrono),
-            _ or ExerciceChronoStates.NotStarted => null
-        };
+    public static RGB? GetStateColor(GenericChronoState chrono) =>
+        (chrono.IsUrgent ?? false)
+        ? GetRBGFromSerie(s_redSerie, chrono)
+        : GetRBGFromSerie(s_greenSerie, chrono);
 
-    private static RGB GetRBGFromSerie(RGB[] serie, ExerciceChronoState chronoState)
+    private static RGB GetRBGFromSerie(RGB[] serie, GenericChronoState chronoState)
     {
         var colorIndex = Convert.ToInt32(
             Math.Floor(

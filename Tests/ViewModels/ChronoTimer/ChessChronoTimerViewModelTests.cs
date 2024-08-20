@@ -40,10 +40,28 @@ public class ChessChronoTimerViewModelTests
     }
 
     [Fact]
+    public void NotStartedShouldHaveBothPlayersNullChronoState()
+    {
+        _chronoStateSubject.OnNext(new(ChessChronoStates.NotStarted));
+
+        _viewModel.FirstPlayerChronoState.Should().BeNull();
+        _viewModel.SecondPlayerChronoState.Should().BeNull();
+    }
+
+    [Fact]
+    public void NotStartedShouldHaveBothPlayersAreDisabled()
+    {
+        _chronoStateSubject.OnNext(new(ChessChronoStates.NotStarted));
+
+        _viewModel.IsFirstPlayerEnabled.Should().BeFalse();
+        _viewModel.IsSecondPlayerEnabled.Should().BeFalse();
+    }
+
+    [Fact]
     public void WhenAwaitPlayerStartGameShouldSetOnlySecondPlayerEnabled()
     {
-        _chronoStateSubject.OnNext(new (TimeSpan.FromSeconds(1)));
-    
+        _chronoStateSubject.OnNext(new(TimeSpan.FromSeconds(1)));
+
         _viewModel.IsFirstPlayerEnabled.Should().BeFalse();
         _viewModel.IsSecondPlayerEnabled.Should().BeTrue();
     }
@@ -51,18 +69,17 @@ public class ChessChronoTimerViewModelTests
     [Fact]
     public void WhenFirstPlayTimerShouldSetOnlyFirstPlayerEnabled()
     {
-        _chronoStateSubject.OnNext(new (ChessChronoStates.FirstPlayerTime));
-    
+        _chronoStateSubject.OnNext(new(ChessChronoStates.FirstPlayerTime));
+
         _viewModel.IsFirstPlayerEnabled.Should().BeTrue();
         _viewModel.IsSecondPlayerEnabled.Should().BeFalse();
     }
-    
-    
+
     [Fact]
     public void WhenSecondPlayTimerShouldSetOnlySecondPlayerEnabled()
     {
-        _chronoStateSubject.OnNext(new (ChessChronoStates.SecondPlayerTime));
-    
+        _chronoStateSubject.OnNext(new(ChessChronoStates.SecondPlayerTime));
+
         _viewModel.IsFirstPlayerEnabled.Should().BeFalse();
         _viewModel.IsSecondPlayerEnabled.Should().BeTrue();
     }

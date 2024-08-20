@@ -1,4 +1,5 @@
 using System.Reactive.Subjects;
+using System.Windows.Input;
 using ChronoTimer.Core.Models;
 using ChronoTimer.Core.Models.ChronoStates;
 using ChronoTimer.Core.Providers;
@@ -14,20 +15,33 @@ public partial class ChronoTimer : ContentView
     public static readonly BindableProperty ChronoStateProperty =
         BindableProperty.Create(
             nameof(ChronoState),
-            typeof(ExerciceChronoState),
+            typeof(GenericChronoState),
             typeof(ChronoTimer),
-            new ExerciceChronoState(),
-            propertyChanged: (bindable, oldValue, newValue) =>
+            null,
+            propertyChanged: (bindable, _, newValue) =>
                 (bindable as ChronoTimer)?.OnChronoStateUpdate(
-                    oldValue as ExerciceChronoState,
-                    newValue as ExerciceChronoState
+                    newValue as GenericChronoState
                 )
         );
 
-    public ExerciceChronoState ChronoState
+    public GenericChronoState? ChronoState
     {
-        get => (ExerciceChronoState)GetValue(ChronoStateProperty);
+        get => GetValue(ChronoStateProperty) as GenericChronoState;
         set => SetValue(ChronoStateProperty, value);
+    }
+    
+    public static readonly BindableProperty OnTapCommandProperty =
+        BindableProperty.Create(
+            nameof(OnTapCommand),
+            typeof(ICommand),
+            typeof(ChronoTimer),
+            null
+        );
+
+    public ICommand? OnTapCommand
+    {
+        get => GetValue(OnTapCommandProperty) as ICommand;
+        set => SetValue(OnTapCommandProperty, value);
     }
 
     public ChronoTimer()
@@ -35,12 +49,13 @@ public partial class ChronoTimer : ContentView
         InitializeComponent();
     }
 
+    protected void OnTapped(object sender, EventArgs args) =>
+        OnTapCommand?.Execute(null);
+
     private void OnChronoStateUpdate(
-        ExerciceChronoState? oldState,
-        ExerciceChronoState? newState
+        GenericChronoState? newState
     )
     {
-        oldState ??= new();
         newState ??= new();
 
         EllipsePulse.ChronoState = newState;

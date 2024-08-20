@@ -15,7 +15,7 @@ public partial class ExerciceChronoTimerViewModel : ObservableObject, IDisposabl
     private readonly IDeviceOrientationService _deviceOrientation;
     
     [ObservableProperty]
-    private ExerciceChronoState _chronoState = new();
+    private GenericChronoState? _chronoState = new();
 
     public ExerciceChronoTimerViewModel(
         IExerciceChronoTimer chronoTimer,
@@ -50,7 +50,9 @@ public partial class ExerciceChronoTimerViewModel : ObservableObject, IDisposabl
     }
 
     private void UpdateViewModelState(ExerciceChronoState chrono) =>
-        ChronoState = chrono;
+        ChronoState = chrono.State is not ExerciceChronoStates.NotStarted
+        ? new(chrono.OriginalTime, chrono.RemainingTime, chrono.State is ExerciceChronoStates.ExerciceTime)
+        : null;
 
     public void Dispose() =>
         _chronoStateSubscription.Dispose();

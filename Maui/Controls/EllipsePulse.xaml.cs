@@ -12,19 +12,19 @@ public partial class EllipsePulse : ContentView
 	public static readonly BindableProperty ChronoStateProperty = 
 		BindableProperty.Create(
 			nameof(ChronoState), 
-			typeof(ExerciceChronoState), 
+			typeof(GenericChronoState), 
 			typeof(EllipsePulse),
-			new ExerciceChronoState(),
+			null,
 			propertyChanged: (bindable, oldValue, newValue) =>
 				(bindable as EllipsePulse)?.OnChronoStateUpdate(
-					oldValue as ExerciceChronoState, 
-					newValue as ExerciceChronoState
+					oldValue as GenericChronoState, 
+					newValue as GenericChronoState
 				)
 		);
 	
-	public ExerciceChronoState ChronoState
+	public GenericChronoState? ChronoState
 	{
-		get => (ExerciceChronoState)GetValue(ChronoStateProperty);
+		get => GetValue(ChronoStateProperty) as GenericChronoState;
 		set => SetValue(ChronoStateProperty, value);
 	}
 
@@ -34,35 +34,38 @@ public partial class EllipsePulse : ContentView
 	}
 
 	private void OnChronoStateUpdate(
-		ExerciceChronoState? oldState, 
-		ExerciceChronoState? newState
+		GenericChronoState? oldState, 
+		GenericChronoState? newState
 	)
     {
-        oldState ??= new();
-        newState ??= new();
-        
         UpdateEllipseVisibility(newState);
 
-        InitAnimatioLengthStepOnStateChanged(oldState, newState);
+        if( newState is not null)
+        {
+            InitAnimationLengthStepOnStateChanged(oldState, newState);
 
-        var oldAnimationLength = _currentAnimationStepLength;
-        
-        UpdateAnimatioLengthStep(newState);
+            var oldAnimationLength = _currentAnimationStepLength;
+            
+            UpdateAnimationLengthStep(newState);
 
-        if (
-            oldState.State != newState.State
-            || oldAnimationLength != _currentAnimationStepLength
-        )
+            if (
+                oldState?.IsUrgent != newState.IsUrgent
+                || oldAnimationLength != _currentAnimationStepLength
+            )
             AnimateEllipse(newState);
+        }
     }
 
-    private void InitAnimatioLengthStepOnStateChanged(ExerciceChronoState oldState, ExerciceChronoState newState)
+    private void InitAnimationLengthStepOnStateChanged(
+        GenericChronoState? oldState, 
+        GenericChronoState newState
+    )
     {
-        var isExerciceStarted =
-            oldState.State is not ExerciceChronoStates.ExerciceTime
-            && newState.State is ExerciceChronoStates.ExerciceTime;
+        var oldIsUrgent = oldState?.IsUrgent ?? false;
+        var newIsUrgent = newState.IsUrgent ?? false;
+        var mustSwitchToUrgentMode = !oldIsUrgent && newIsUrgent;
 
-        if (isExerciceStarted)
+        if (mustSwitchToUrgentMode)
         {
             _animationLengthSteps = [
                 (newState.OriginalTime.Ticks * 0.75, 2500),
@@ -72,11 +75,9 @@ public partial class EllipsePulse : ContentView
             ];
         }
 
-        var isBreakTimeStarted =
-            oldState.State is not ExerciceChronoStates.BreakTime
-            && newState.State is ExerciceChronoStates.BreakTime;
+        var mustSwitchToNotUrgentMode = oldIsUrgent && !newIsUrgent;
 
-        if (isBreakTimeStarted)
+        if (mustSwitchToNotUrgentMode)
         {
             _animationLengthSteps = [
                 (newState.OriginalTime.Ticks * 0.75, 1500),
@@ -87,41 +88,47 @@ public partial class EllipsePulse : ContentView
         }
     }
 
-    private void UpdateAnimatioLengthStep(ExerciceChronoState newState) =>
+    private void UpdateAnimationLengthStep(GenericChronoState newState) =>
         _currentAnimationStepLength = 
             _animationLengthSteps.FirstOrDefault(
                 animationStep => newState.RemainingTime.Ticks >= animationStep.Step
             )
             .Length;
 
-    private void UpdateEllipseVisibility(ExerciceChronoState chronoState)
+    private void UpdateEllipseVisibility(GenericChronoState? chronoState)
     {
-        firstEllipse.IsVisible = chronoState.State is not ExerciceChronoStates.NotStarted;
-        secondEllipse.IsVisible = chronoState.State is ExerciceChronoStates.ExerciceTime;
-        thirdEllipse.IsVisible = chronoState.State is ExerciceChronoStates.ExerciceTime;
+        firstEllipse.IsVisible = chronoState is not null;
+        secondEllipse.IsVisible = chronoState?.IsUrgent ?? false;
+        thirdEllipse.IsVisible = chronoState?.IsUrgent ?? false;
     }
 
-	private void AnimateEllipse(ExerciceChronoState chronoState)
+	private void AnimateEllipse(GenericChronoState chronoState)
     {
-		container.AbortAnimation(AninationName);
+        AbortAnimation();
 
-        if(chronoState.State is ExerciceChronoStates.NotStarted)
-            return;
+        if (chronoState.IsUrgent is not null)
+        {
+            var baseTime = (bool)chronoState.IsUrgent
+                ? _currentAnimationStepLength 
+                : 3000;
 
-		var baseTime = chronoState.State is ExerciceChronoStates.ExerciceTime 
-            ? _currentAnimationStepLength
-            : 3000;
-
-		container.Animate(
-			AninationName,
-			MakeEllipseAnimation(),
-			length: baseTime,
-			easing: Easing.Linear,
-			repeat: () => true
-		);
+            container.Animate(
+                AninationName,
+                MakeEllipseAnimation(),
+                length: baseTime,
+                easing: Easing.Linear,
+                repeat: () => true
+            );
+        }
     }
 
-	private Animation MakeEllipseAnimation()
+    private void AbortAnimation()
+    {
+        container.AbortAnimation(AninationName);
+        UpdateEllipseVisibility(null);
+    } 
+    
+    private Animation MakeEllipseAnimation()
 	{
 		var scaleInAnimation = new Animation(v => container.Scale = v, start: 0, end: 10, easing: Easing.Linear);
 		var fadeOutAnimation = new Animation(v => container.Opacity = v, start: 1, end: 0, easing: Easing.Linear);

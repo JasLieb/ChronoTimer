@@ -44,13 +44,23 @@ public class ExerciceChronoTimerViewModelTests
     }
 
     [Fact]
+    public void NotStartedShouldHaveNullChronoState()
+    {
+        _chronoStateSubject.OnNext(
+            new(ExerciceChronoStates.NotStarted)
+        );
+
+        _viewModel.ChronoState.Should().BeNull();
+    }
+
+    [Fact]
     public void DisplayedRemainingTimeShouldBeActualRemainingTime()
     {
         _chronoStateSubject.OnNext(
             new(ExerciceChronoStates.ExerciceTime, TimeSpan.FromSeconds(1))
         );
 
-        _viewModel.ChronoState.State.Should().Be(ExerciceChronoStates.ExerciceTime);
+        _viewModel.ChronoState!.IsUrgent.Should().BeTrue();
         _viewModel.ChronoState.RemainingTime.Should().Be(TimeSpan.FromSeconds(1));
     }
 

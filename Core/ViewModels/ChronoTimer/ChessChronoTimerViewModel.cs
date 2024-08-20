@@ -16,7 +16,10 @@ public partial class ChessChronoTimerViewModel : ObservableObject, IDisposable, 
     private readonly IDeviceOrientationService _deviceOrientation;
     
     [ObservableProperty]
-    private ChessChronoState _chronoState = new();
+    private GenericChronoState? _firstPlayerChronoState;
+    
+    [ObservableProperty]
+    private GenericChronoState? _secondPlayerChronoState;
     
     [ObservableProperty]
     private bool _isFirstPlayerEnabled = false;
@@ -34,9 +37,7 @@ public partial class ChessChronoTimerViewModel : ObservableObject, IDisposable, 
         _navigator = navigator;
         _deviceOrientation = deviceOrientation;
         _chronoStateSubscription =
-            chronoTimer.Chrono
-                .Delay(TimeSpan.FromMilliseconds(500))
-                .Subscribe(UpdateViewModelState);
+            chronoTimer.Chrono.Subscribe(UpdateViewModelState);
     }
     
     public void ApplyQueryAttributes(IDictionary<string, object> query) 
@@ -64,11 +65,16 @@ public partial class ChessChronoTimerViewModel : ObservableObject, IDisposable, 
 
     private void UpdateViewModelState(ChessChronoState chrono)
     {
-        ChronoState = chrono;
         IsFirstPlayerEnabled = chrono.State is ChessChronoStates.FirstPlayerTime;
         IsSecondPlayerEnabled = 
             chrono.State is ChessChronoStates.SecondPlayerTime 
             or ChessChronoStates.AwaitPlayerStartGame;
+        FirstPlayerChronoState = chrono.State is ChessChronoStates.NotStarted
+            ? null
+            : new(chrono.OriginalTime, chrono.RemainingTimeFirstPlayer, IsFirstPlayerEnabled);
+        SecondPlayerChronoState = chrono.State is ChessChronoStates.NotStarted
+            ? null
+            : new(chrono.OriginalTime, chrono.RemainingTimeSecondPlayer, IsSecondPlayerEnabled);
     }
 
     public void Dispose() =>
