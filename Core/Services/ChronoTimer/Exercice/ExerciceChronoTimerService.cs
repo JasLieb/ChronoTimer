@@ -2,23 +2,23 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using ChronoTimer.Core.Models;
+using ChronoTimer.Core.Models.ChronoStates;
 
-namespace ChronoTimer.Core.Services.ChronoTimer;
+namespace ChronoTimer.Core.Services.ChronoTimer.Exercice;
 
-public class ChronoTimerService(
+public class ExerciceChronoTimerService(
     IScheduler scheduler,
     ISonificationPlayer sonificationPlayer
-) : IChronoTimer
+) : IExerciceChronoTimer
 {
-    private static readonly TimeSpan _period = TimeSpan.FromMilliseconds(100);
+    private static readonly TimeSpan s_period = TimeSpan.FromMilliseconds(100);
     private readonly IScheduler _scheduler = scheduler;
     private readonly ISonificationPlayer _sonificationPlayer = sonificationPlayer;
 
     private IDisposable _currentTimeSubscription = Disposable.Empty;
 
-    public IObservable<ChronoState> Chrono => _chronoSubject;
-    private readonly BehaviorSubject<ChronoState> _chronoSubject = new(new());
+    public IObservable<ExerciceChronoState> Chrono => _chronoSubject;
+    private readonly BehaviorSubject<ExerciceChronoState> _chronoSubject = new(new());
 
     public void StartExercice(TimeSpan exerciceTime, TimeSpan breakTime)
     {
@@ -47,12 +47,12 @@ public class ChronoTimerService(
     {
         notifyRemainingTime(dueTime);
         _currentTimeSubscription =
-            Observable.Timer(_period, _scheduler)
+            Observable.Timer(s_period, _scheduler)
             .Repeat()
             .Subscribe(
                 time =>
                 {
-                    notifyRemainingTime(dueTime -= _period);
+                    notifyRemainingTime(dueTime -= s_period);
                     if (dueTime <= TimeSpan.Zero)
                     {
                         _currentTimeSubscription.Dispose();
@@ -68,7 +68,7 @@ public class ChronoTimerService(
         TimeSpan originalTime
     ) =>
         EmitChronoState(
-            new(ChronoStates.ExerciceTime, remainingTime, originalTime)
+            new(ExerciceChronoStates.ExerciceTime, remainingTime, originalTime)
         );
 
     private void EmitBreakTime(
@@ -76,7 +76,7 @@ public class ChronoTimerService(
         TimeSpan originalTime
     ) =>
         EmitChronoState(
-            new(ChronoStates.BreakTime, remainingTime, originalTime)
+            new(ExerciceChronoStates.BreakTime, remainingTime, originalTime)
         );
 
     private void EmitStop()
@@ -85,6 +85,6 @@ public class ChronoTimerService(
         EmitChronoState(new());
     }
 
-    private void EmitChronoState(ChronoState chronoState) =>
+    private void EmitChronoState(ExerciceChronoState chronoState) =>
         _chronoSubject.OnNext(chronoState);
 }

@@ -1,24 +1,24 @@
-﻿using ChronoTimer.Core.Models;
-using ChronoTimer.Core.Services;
-using ChronoTimer.Core.Services.ChronoTimer;
+﻿using ChronoTimer.Core.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ChronoTimer.Core.Models.Requests;
+using ChronoTimer.Core.Services.ChronoTimer.Exercice;
+using ChronoTimer.Core.Models.ChronoStates;
 
 namespace ChronoTimer.Core.ViewModels.ChronoTimer;
 
 public partial class ChronoTimerViewModel : ObservableObject, IDisposable, IQueryAttributable
 {
     private readonly IDisposable _chronoStateSubscription;
-    private readonly IChronoTimer _chronoTimer;
+    private readonly IExerciceChronoTimer _chronoTimer;
     private readonly INavigator _navigator;
     private readonly IDeviceOrientationService _deviceOrientation;
     
     [ObservableProperty]
-    private ChronoState _chronoState = new();
+    private ExerciceChronoState _chronoState = new();
 
     public ChronoTimerViewModel(
-        IChronoTimer chronoTimer,
+        IExerciceChronoTimer chronoTimer,
         INavigator navigator,
         IDeviceOrientationService deviceOrientation
     )
@@ -49,7 +49,7 @@ public partial class ChronoTimerViewModel : ObservableObject, IDisposable, IQuer
         _navigator.GotoExerciceSetup();
     }
 
-    private void UpdateViewModelState(ChronoState chrono) =>
+    private void UpdateViewModelState(ExerciceChronoState chrono) =>
         ChronoState = chrono;
 
     public void Dispose() =>

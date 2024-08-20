@@ -1,4 +1,4 @@
-using ChronoTimer.Core.Models;
+using ChronoTimer.Core.Models.ChronoStates;
 
 namespace ChronoTimer.Maui.Controls;
 
@@ -12,19 +12,19 @@ public partial class EllipsePulse : ContentView
 	public static readonly BindableProperty ChronoStateProperty = 
 		BindableProperty.Create(
 			nameof(ChronoState), 
-			typeof(ChronoState), 
+			typeof(ExerciceChronoState), 
 			typeof(EllipsePulse),
-			new ChronoState(),
+			new ExerciceChronoState(),
 			propertyChanged: (bindable, oldValue, newValue) =>
 				(bindable as EllipsePulse)?.OnChronoStateUpdate(
-					oldValue as ChronoState, 
-					newValue as ChronoState
+					oldValue as ExerciceChronoState, 
+					newValue as ExerciceChronoState
 				)
 		);
 	
-	public ChronoState ChronoState
+	public ExerciceChronoState ChronoState
 	{
-		get => (ChronoState)GetValue(ChronoStateProperty);
+		get => (ExerciceChronoState)GetValue(ChronoStateProperty);
 		set => SetValue(ChronoStateProperty, value);
 	}
 
@@ -34,8 +34,8 @@ public partial class EllipsePulse : ContentView
 	}
 
 	private void OnChronoStateUpdate(
-		ChronoState? oldState, 
-		ChronoState? newState
+		ExerciceChronoState? oldState, 
+		ExerciceChronoState? newState
 	)
     {
         oldState ??= new();
@@ -56,11 +56,11 @@ public partial class EllipsePulse : ContentView
             AnimateEllipse(newState);
     }
 
-    private void InitAnimatioLengthStepOnStateChanged(ChronoState oldState, ChronoState newState)
+    private void InitAnimatioLengthStepOnStateChanged(ExerciceChronoState oldState, ExerciceChronoState newState)
     {
         var isExerciceStarted =
-            oldState.State is not ChronoStates.ExerciceTime
-            && newState.State is ChronoStates.ExerciceTime;
+            oldState.State is not ExerciceChronoStates.ExerciceTime
+            && newState.State is ExerciceChronoStates.ExerciceTime;
 
         if (isExerciceStarted)
         {
@@ -73,8 +73,8 @@ public partial class EllipsePulse : ContentView
         }
 
         var isBreakTimeStarted =
-            oldState.State is not ChronoStates.BreakTime
-            && newState.State is ChronoStates.BreakTime;
+            oldState.State is not ExerciceChronoStates.BreakTime
+            && newState.State is ExerciceChronoStates.BreakTime;
 
         if (isBreakTimeStarted)
         {
@@ -87,28 +87,28 @@ public partial class EllipsePulse : ContentView
         }
     }
 
-    private void UpdateAnimatioLengthStep(ChronoState newState) =>
+    private void UpdateAnimatioLengthStep(ExerciceChronoState newState) =>
         _currentAnimationStepLength = 
             _animationLengthSteps.FirstOrDefault(
                 animationStep => newState.RemainingTime.Ticks >= animationStep.Step
             )
             .Length;
 
-    private void UpdateEllipseVisibility(ChronoState chronoState)
+    private void UpdateEllipseVisibility(ExerciceChronoState chronoState)
     {
-        firstEllipse.IsVisible = chronoState.State is not ChronoStates.NotStarted;
-        secondEllipse.IsVisible = chronoState.State is ChronoStates.ExerciceTime;
-        thirdEllipse.IsVisible = chronoState.State is ChronoStates.ExerciceTime;
+        firstEllipse.IsVisible = chronoState.State is not ExerciceChronoStates.NotStarted;
+        secondEllipse.IsVisible = chronoState.State is ExerciceChronoStates.ExerciceTime;
+        thirdEllipse.IsVisible = chronoState.State is ExerciceChronoStates.ExerciceTime;
     }
 
-	private void AnimateEllipse(ChronoState chronoState)
+	private void AnimateEllipse(ExerciceChronoState chronoState)
     {
 		container.AbortAnimation(AninationName);
 
-        if(chronoState.State is ChronoStates.NotStarted)
+        if(chronoState.State is ExerciceChronoStates.NotStarted)
             return;
 
-		var baseTime = chronoState.State is ChronoStates.ExerciceTime 
+		var baseTime = chronoState.State is ExerciceChronoStates.ExerciceTime 
             ? _currentAnimationStepLength
             : 3000;
 

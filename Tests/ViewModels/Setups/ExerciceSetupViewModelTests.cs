@@ -1,6 +1,4 @@
-﻿using ChronoTimer.Core.Models.Requests;
-
-namespace ChronoTimer.Tests.ViewModels.Setups;
+﻿namespace ChronoTimer.Tests.ViewModels.Setups;
 
 public class ExerciceSetupViewModelTests
 {

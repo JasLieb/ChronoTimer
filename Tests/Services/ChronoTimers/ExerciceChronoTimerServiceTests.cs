@@ -1,20 +1,22 @@
-﻿namespace ChronoTimer.Tests.Services;
+﻿using ChronoTimer.Core.Models.ChronoStates;
 
-public class ChronoTimerServiceTests : IDisposable
+namespace ChronoTimer.Tests.Services.ChronoTimers;
+
+public class ExerciceChronoTimerServiceTests : IDisposable
 {
 
     private readonly TimeSpan _exerciceTime = TimeSpan.FromSeconds(3);
     private readonly TimeSpan _breakTime = TimeSpan.FromSeconds(1);
 
-    private readonly ChronoTimerService _timer;
-    private readonly TestScheduler _scheduler = new TestScheduler();
+    private readonly ExerciceChronoTimerService _timer;
+    private readonly TestScheduler _scheduler = new();
     private readonly ISonificationPlayer _sonificationPlayer = Substitute.For<ISonificationPlayer>();
     private readonly IDisposable _chronoSubcription;
-    private ChronoState? _currentChrono;
+    private ExerciceChronoState? _currentChrono;
 
-    public ChronoTimerServiceTests()
+    public ExerciceChronoTimerServiceTests()
     {
-        _timer = new ChronoTimerService(_scheduler, _sonificationPlayer);
+        _timer = new ExerciceChronoTimerService(_scheduler, _sonificationPlayer);
         _chronoSubcription = _timer.Chrono.Subscribe(
             chrono => _currentChrono = chrono
         );
@@ -23,7 +25,7 @@ public class ChronoTimerServiceTests : IDisposable
     [Fact]
     public void NotStartedTimerShouldHaveNotStartedState()
     {
-        _currentChrono!.State.Should().Be(ChronoStates.NotStarted);
+        _currentChrono!.State.Should().Be(ExerciceChronoStates.NotStarted);
     }
 
     [Fact]
@@ -33,7 +35,7 @@ public class ChronoTimerServiceTests : IDisposable
 
         _timer.StopExercice();
 
-        _currentChrono!.State.Should().Be(ChronoStates.NotStarted);
+        _currentChrono!.State.Should().Be(ExerciceChronoStates.NotStarted);
     }
 
     [Fact]
@@ -41,7 +43,7 @@ public class ChronoTimerServiceTests : IDisposable
     {
         StartExercice();
 
-        _currentChrono!.State.Should().Be(ChronoStates.ExerciceTime);
+        _currentChrono!.State.Should().Be(ExerciceChronoStates.ExerciceTime);
         _currentChrono.RemainingTime.Should().Be(_exerciceTime);
         _currentChrono.OriginalTime.Should().Be(_exerciceTime);
     }
@@ -54,7 +56,7 @@ public class ChronoTimerServiceTests : IDisposable
 
         _scheduler.AdvanceBy(elapsedTime.Ticks);
 
-        _currentChrono!.State.Should().Be(ChronoStates.ExerciceTime);
+        _currentChrono!.State.Should().Be(ExerciceChronoStates.ExerciceTime);
         _currentChrono.OriginalTime.Should().Be(_exerciceTime);
         _currentChrono.RemainingTime.Should().Be(
             _exerciceTime - elapsedTime
@@ -78,7 +80,7 @@ public class ChronoTimerServiceTests : IDisposable
 
         _scheduler.AdvanceTo(_exerciceTime.Ticks);
 
-        _currentChrono!.State.Should().Be(ChronoStates.BreakTime);
+        _currentChrono!.State.Should().Be(ExerciceChronoStates.BreakTime);
         _currentChrono.RemainingTime.Should().Be(_breakTime);
         _currentChrono.OriginalTime.Should().Be(_breakTime);
     }
@@ -92,7 +94,7 @@ public class ChronoTimerServiceTests : IDisposable
             (_exerciceTime + _breakTime).Ticks
         );
 
-        _currentChrono!.State.Should().Be(ChronoStates.ExerciceTime);
+        _currentChrono!.State.Should().Be(ExerciceChronoStates.ExerciceTime);
         _currentChrono.RemainingTime.Should().Be(_exerciceTime);
         _currentChrono.OriginalTime.Should().Be(_exerciceTime);
     }

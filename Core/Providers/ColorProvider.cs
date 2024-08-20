@@ -1,4 +1,5 @@
 ﻿using ChronoTimer.Core.Models;
+using ChronoTimer.Core.Models.ChronoStates;
 
 namespace ChronoTimer.Core.Providers;
 
@@ -32,15 +33,15 @@ public class ColorProvider
             new (109, 202, 123)
         ];
 
-    public static RGB? GetStateColor(ChronoState chrono) =>
+    public static RGB? GetStateColor(ExerciceChronoState chrono) =>
         chrono.State switch
         {
-            ChronoStates.ExerciceTime => GetRBGFromSerie(s_redSerie, chrono),
-            ChronoStates.BreakTime => GetRBGFromSerie(s_greenSerie, chrono),
-            _ or ChronoStates.NotStarted => null
+            ExerciceChronoStates.ExerciceTime => GetRBGFromSerie(s_redSerie, chrono),
+            ExerciceChronoStates.BreakTime => GetRBGFromSerie(s_greenSerie, chrono),
+            _ or ExerciceChronoStates.NotStarted => null
         };
 
-    private static RGB GetRBGFromSerie(RGB[] serie, ChronoState chronoState)
+    private static RGB GetRBGFromSerie(RGB[] serie, ExerciceChronoState chronoState)
     {
         var colorIndex = Convert.ToInt32(
             Math.Floor(

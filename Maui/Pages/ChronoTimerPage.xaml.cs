@@ -3,9 +3,9 @@ using CommunityToolkit.Maui.Extensions;
 
 namespace ChronoTimer.Maui.Pages;
 
-public partial class ChronoTimerPage : ContentPage
+public partial class ChronoTimerPage : ContentPage, IDisposable
 {
-    private readonly ChronoTimerViewModel _chronoTimerViewModel;
+    private readonly IDisposable _disposable;
 
     public ChronoTimerPage(
         ChronoTimerViewModel chronoTimerViewModel
@@ -13,15 +13,17 @@ public partial class ChronoTimerPage : ContentPage
     {
         InitializeComponent();
         BindingContext = chronoTimerViewModel;
-        _chronoTimerViewModel = chronoTimerViewModel;
-        ChronoTimer.CurrentColorObservable.Subscribe(
-            UpdatePageBackgroundColor
-        );
+        _disposable = 
+            ChronoTimer.CurrentColorObservable.Subscribe(
+                UpdatePageBackgroundColor
+            );
     }
 
-    private void UpdatePageBackgroundColor(Color currentColor) => 
+    private void UpdatePageBackgroundColor(Color currentColor) =>
         MainThread.BeginInvokeOnMainThread(
             async () =>
                 await PageContainer.BackgroundColorTo(currentColor)
         );
+
+    public void Dispose() => _disposable.Dispose();
 }

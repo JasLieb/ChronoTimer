@@ -1,18 +1,18 @@
-﻿using ChronoTimer.Core.Models.Requests;
+﻿using ChronoTimer.Core.Models.ChronoStates;
 
 namespace ChronoTimer.Tests.ViewModels;
 
 public class ChronoTimerViewModelTests
 {
-    private readonly Subject<ChronoState> _chronoStateSubject = new();
-    private readonly IChronoTimer _chronoTimer;
+    private readonly Subject<ExerciceChronoState> _chronoStateSubject = new();
+    private readonly IExerciceChronoTimer _chronoTimer;
     private readonly INavigator _navigator;
     private readonly IDeviceOrientationService _deviceOrientation;
     private readonly ChronoTimerViewModel _viewModel;
 
     public ChronoTimerViewModelTests()
     {
-        _chronoTimer = Substitute.For<IChronoTimer>();
+        _chronoTimer = Substitute.For<IExerciceChronoTimer>();
         _navigator = Substitute.For<INavigator>();
         _chronoTimer.Chrono.Returns(_chronoStateSubject);
         _deviceOrientation = Substitute.For<IDeviceOrientationService>();
@@ -49,10 +49,10 @@ public class ChronoTimerViewModelTests
     public void DisplayedRemainingTimeShouldBeActualRemainingTime()
     {
         _chronoStateSubject.OnNext(
-            new(ChronoStates.ExerciceTime, TimeSpan.FromSeconds(1))
+            new(ExerciceChronoStates.ExerciceTime, TimeSpan.FromSeconds(1))
         );
 
-        _viewModel.ChronoState.State.Should().Be(ChronoStates.ExerciceTime);
+        _viewModel.ChronoState.State.Should().Be(ExerciceChronoStates.ExerciceTime);
         _viewModel.ChronoState.RemainingTime.Should().Be(TimeSpan.FromSeconds(1));
     }
 

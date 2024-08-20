@@ -1,5 +1,6 @@
 using System.Reactive.Subjects;
 using ChronoTimer.Core.Models;
+using ChronoTimer.Core.Models.ChronoStates;
 using ChronoTimer.Core.Providers;
 using CommunityToolkit.Maui.Extensions;
 
@@ -13,19 +14,19 @@ public partial class ChronoTimer : ContentView
     public static readonly BindableProperty ChronoStateProperty =
         BindableProperty.Create(
             nameof(ChronoState),
-            typeof(ChronoState),
+            typeof(ExerciceChronoState),
             typeof(ChronoTimer),
-            new ChronoState(),
+            new ExerciceChronoState(),
             propertyChanged: (bindable, oldValue, newValue) =>
                 (bindable as ChronoTimer)?.OnChronoStateUpdate(
-                    oldValue as ChronoState,
-                    newValue as ChronoState
+                    oldValue as ExerciceChronoState,
+                    newValue as ExerciceChronoState
                 )
         );
 
-    public ChronoState ChronoState
+    public ExerciceChronoState ChronoState
     {
-        get => (ChronoState)GetValue(ChronoStateProperty);
+        get => (ExerciceChronoState)GetValue(ChronoStateProperty);
         set => SetValue(ChronoStateProperty, value);
     }
 
@@ -35,8 +36,8 @@ public partial class ChronoTimer : ContentView
     }
 
     private void OnChronoStateUpdate(
-        ChronoState? oldState,
-        ChronoState? newState
+        ExerciceChronoState? oldState,
+        ExerciceChronoState? newState
     )
     {
         oldState ??= new();
