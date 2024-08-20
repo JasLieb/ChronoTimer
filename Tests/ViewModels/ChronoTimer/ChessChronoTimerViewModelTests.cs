@@ -18,11 +18,11 @@ public class ChessChronoTimerViewModelTests
     }
 
     [Fact]
-    public void OnApplyQueryAttributesShouldSetLandscapeOrientation()
+    public void OnApplyQueryAttributesShouldSetPortraitOrientation()
     {
         _viewModel.ApplyQueryAttributes(new Dictionary<string, object>());
 
-        _deviceOrientation.Received().SetLandscape();
+        _deviceOrientation.Received().SetPortrait();
     }
 
     [Fact]

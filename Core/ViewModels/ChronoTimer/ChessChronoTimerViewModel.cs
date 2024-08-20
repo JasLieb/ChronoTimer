@@ -42,7 +42,7 @@ public partial class ChessChronoTimerViewModel : ObservableObject, IDisposable, 
     
     public void ApplyQueryAttributes(IDictionary<string, object> query) 
     {
-        _deviceOrientation.SetLandscape();
+        _deviceOrientation.SetPortrait();
         if (
             query.TryGetValue("request", out var value) 
             && value is ChessRequest request
