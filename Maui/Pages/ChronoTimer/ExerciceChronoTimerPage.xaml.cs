@@ -1,14 +1,14 @@
 using ChronoTimer.Core.ViewModels.ChronoTimer;
 using CommunityToolkit.Maui.Extensions;
 
-namespace ChronoTimer.Maui.Pages;
+namespace ChronoTimer.Maui.Pages.ChronoTimer;
 
-public partial class ChronoTimerPage : ContentPage, IDisposable
+public partial class ExerciceChronoTimerPage : ContentPage, IDisposable
 {
     private readonly IDisposable _disposable;
 
-    public ChronoTimerPage(
-        ChronoTimerViewModel chronoTimerViewModel
+    public ExerciceChronoTimerPage(
+        ExerciceChronoTimerViewModel chronoTimerViewModel
     )
     {
         InitializeComponent();

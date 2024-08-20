@@ -37,7 +37,7 @@ public partial class ExerciceSetupViewModel(
             return;
         }
         
-        _navigator.GotoChronoTimer(
+        _navigator.GotoExerciceChronoTimer(
             new(
                 ExerciceTime.Value,
                 BreakTime.Value

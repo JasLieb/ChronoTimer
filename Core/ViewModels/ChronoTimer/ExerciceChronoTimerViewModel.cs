@@ -7,7 +7,7 @@ using ChronoTimer.Core.Models.ChronoStates;
 
 namespace ChronoTimer.Core.ViewModels.ChronoTimer;
 
-public partial class ChronoTimerViewModel : ObservableObject, IDisposable, IQueryAttributable
+public partial class ExerciceChronoTimerViewModel : ObservableObject, IDisposable, IQueryAttributable
 {
     private readonly IDisposable _chronoStateSubscription;
     private readonly IExerciceChronoTimer _chronoTimer;
@@ -17,7 +17,7 @@ public partial class ChronoTimerViewModel : ObservableObject, IDisposable, IQuer
     [ObservableProperty]
     private ExerciceChronoState _chronoState = new();
 
-    public ChronoTimerViewModel(
+    public ExerciceChronoTimerViewModel(
         IExerciceChronoTimer chronoTimer,
         INavigator navigator,
         IDeviceOrientationService deviceOrientation

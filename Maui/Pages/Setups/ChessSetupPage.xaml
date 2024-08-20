@@ -15,23 +15,8 @@
             HorizontalOptions="Center"
             Text="Player time :"
             SelectedTime="{Binding TimePerPlayer.Value, Mode=OneWayToSource}"/>
-        <!-- <Frame
-            HorizontalOptions="Center"
-            BorderColor="{x:StaticResource Gray500}">
-            <VerticalStackLayout Spacing="24">
-                <Label
-                    Text="Exercise time :"
-                    FontSize="Medium"
-                    HorizontalOptions="Center"
-                    SemanticProperties.Description="Exercise time :"/>
 
-                <controls:TimePicker
-                    HorizontalOptions="Center"
-                    SelectedTime="{Binding ExerciceTime.Value, Mode=OneWayToSource}"/>
-            </VerticalStackLayout>
-        </Frame> -->
-
-        <!-- <Frame
+        <Frame
             BackgroundColor="{x:StaticResource Secondary}"
             IsVisible="{Binding IsErrorsVisible}"
             HorizontalOptions="CenterAndExpand">
@@ -45,13 +30,13 @@
                     </FormattedString>
                 </Label.FormattedText>
             </Label>
-        </Frame> -->
+        </Frame> 
 
-        <!-- <Button
+        <Button
             Text="Play"
             SemanticProperties.Hint="Start chess game with given time before"
-            Command="{Binding StartExerciceCommand}"
-            HorizontalOptions="CenterAndExpand"/> -->
+            Command="{Binding StartGameCommand}"
+            HorizontalOptions="CenterAndExpand"/>
 
         <Button
             Text="Change Chrono"

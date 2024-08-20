@@ -1,22 +1,20 @@
-﻿using ChronoTimer.Core.Models.ChronoStates;
+﻿namespace ChronoTimer.Tests.ViewModels.ChronoTimer;
 
-namespace ChronoTimer.Tests.ViewModels;
-
-public class ChronoTimerViewModelTests
+public class ExerciceChronoTimerViewModelTests
 {
     private readonly Subject<ExerciceChronoState> _chronoStateSubject = new();
     private readonly IExerciceChronoTimer _chronoTimer;
     private readonly INavigator _navigator;
     private readonly IDeviceOrientationService _deviceOrientation;
-    private readonly ChronoTimerViewModel _viewModel;
+    private readonly ExerciceChronoTimerViewModel _viewModel;
 
-    public ChronoTimerViewModelTests()
+    public ExerciceChronoTimerViewModelTests()
     {
         _chronoTimer = Substitute.For<IExerciceChronoTimer>();
         _navigator = Substitute.For<INavigator>();
         _chronoTimer.Chrono.Returns(_chronoStateSubject);
         _deviceOrientation = Substitute.For<IDeviceOrientationService>();
-        _viewModel = new ChronoTimerViewModel(_chronoTimer, _navigator, _deviceOrientation);
+        _viewModel = new ExerciceChronoTimerViewModel(_chronoTimer, _navigator, _deviceOrientation);
     }
 
     [Fact]
@@ -26,7 +24,7 @@ public class ChronoTimerViewModelTests
 
         _deviceOrientation.Received().SetLandscape();
     }
-    
+
     [Fact]
     public void OnApplyQueryAttributesShouldStartExercice()
     {
@@ -57,7 +55,7 @@ public class ChronoTimerViewModelTests
     }
 
     [Fact]
-    public void ExecuteGotoExerciceSetupPageCommandShouldGStopTimer()
+    public void ExecuteGotoExerciceSetupPageCommandShouldStopTimer()
     {
         _viewModel.GotoExerciceSetupPageCommand.Execute(null);
         _chronoTimer.Received().StopExercice();

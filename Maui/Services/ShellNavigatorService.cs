@@ -14,9 +14,15 @@ public class ShellNavigatorService : INavigator
     public async void GotoChessSetup() =>
         await Shell.Current.GoToAsync("//chessSetup");
 
-    public async void GotoChronoTimer(ExerciceRequest request) => 
-        await Shell.Current.GoToAsync("//chrono", MakeNavigationArgs(request));
+    public async void GotoExerciceChronoTimer(ExerciceRequest request) => 
+        await Shell.Current.GoToAsync(
+            "//exerciceChrono", 
+            new Dictionary<string, object>() { {"request", request} }
+        );
     
-    private Dictionary<string, object> MakeNavigationArgs(ExerciceRequest request) => 
-        new() { {"request", request} };
+    public async void GotoChessChronoTimer(ChessRequest request) => 
+        await Shell.Current.GoToAsync(
+            "//chessChrono", 
+            new Dictionary<string, object>() { {"request", request} }
+        );
 }

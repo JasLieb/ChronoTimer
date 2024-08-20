@@ -22,6 +22,51 @@ public class ChessSetupViewModelTests
     }
 
     [Fact]
+    public void OnAppearingShouldResetErrors()
+    {
+        _viewModel.OnAppearing();
+
+        _viewModel.Error.Should().BeNull();
+        _viewModel.IsErrorsVisible.Should().BeFalse();
+    }
+
+    [Fact]
+    public void ASelectedTimeIsZeroShouldCannotExecuteStartExerciceCommand()
+    {
+        _viewModel.TimePerPlayer.Value = TimeSpan.FromSeconds(0);
+
+        _viewModel.StartGameCommand.Execute(null);
+
+        _navigator.DidNotReceive().GotoChessChronoTimer(Arg.Any<ChessRequest>());
+    }
+    
+    [Fact]
+    public void ASelectedTimeIsZeroShouldDisplayError()
+    {
+        _viewModel.TimePerPlayer.Value = TimeSpan.FromSeconds(0);
+
+        _viewModel.StartGameCommand.Execute(null);
+
+        _viewModel.Error.Should().Be("Time cannot be Zero");
+        _viewModel.IsErrorsVisible.Should().BeTrue();
+    }
+
+    [Fact]
+    public void OnStartExerciceCommandShouldStartExercice()
+    {
+        var timePerPlayer = TimeSpan.FromSeconds(10);
+        _viewModel.TimePerPlayer.Value = timePerPlayer;
+        
+        _viewModel.StartGameCommand.Execute(null);
+        
+        _navigator.Received().GotoChessChronoTimer(
+            Arg.Is<ChessRequest>(
+                request => request.TimePerPlayer == timePerPlayer
+            )
+        );
+    }
+
+    [Fact]
     public void OnChangeChronoTypeCommandShouldGotoSelection()
     {
         _viewModel.ChangeChronoTypeCommand.Execute(null);

@@ -8,6 +8,8 @@ using ChronoTimer.Maui.Services;
 using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using ChronoTimer.Core.Services.ChronoTimer.Exercice;
+using ChronoTimer.Core.Services.ChronoTimer.Chess;
+using ChronoTimer.Maui.Pages.ChronoTimer;
 
 namespace ChronoTimer.Maui;
 
@@ -44,6 +46,7 @@ public static class MauiProgram
 			.AddTransient<IScheduler>(_ => NewThreadScheduler.Default)
 			.AddSingleton<INavigator, ShellNavigatorService>()
 			.AddSingleton<IExerciceChronoTimer, ExerciceChronoTimerService>()
+			.AddSingleton<IChessChronoTimer, ChessChronoTimerService>()
 			.AddSingleton<ISonificationPlayer, SonificationPlayer>()
 			.AddTransient<ChronoSelectionPage>()
 			.AddSingleton<ChronoSelectionViewModel>()
@@ -51,8 +54,10 @@ public static class MauiProgram
 			.AddSingleton<ExerciceSetupViewModel>()
 			.AddTransient<ChessSetupPage>()
 			.AddTransient<ChessSetupViewModel>()
-			.AddTransient<ChronoTimerPage>()
-			.AddSingleton<ChronoTimerViewModel>();
+			.AddTransient<ExerciceChronoTimerPage>()
+			.AddSingleton<ExerciceChronoTimerViewModel>()
+			.AddTransient<ChessChronoTimerPage>()
+			.AddSingleton<ChessChronoTimerViewModel>();
 
 		return builder.Build();
 	}

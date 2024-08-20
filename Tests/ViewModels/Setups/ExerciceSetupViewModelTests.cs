@@ -38,7 +38,7 @@ public class ExerciceSetupViewModelTests
 
         _viewModel.StartExerciceCommand.Execute(null);
 
-        _navigator.DidNotReceive().GotoChronoTimer(Arg.Any<ExerciceRequest>());
+        _navigator.DidNotReceive().GotoExerciceChronoTimer(Arg.Any<ExerciceRequest>());
     }
     
     [Fact]
@@ -63,7 +63,7 @@ public class ExerciceSetupViewModelTests
         
         _viewModel.StartExerciceCommand.Execute(null);
         
-        _navigator.Received().GotoChronoTimer(
+        _navigator.Received().GotoExerciceChronoTimer(
             Arg.Is<ExerciceRequest>(
                 request => 
                     request.ExerciceTime == exerciceTime

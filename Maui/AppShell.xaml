@@ -4,8 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:ChronoTimer.Maui.Pages"
-    Shell.FlyoutBehavior="Disabled"
-    Title="ChronoTimer">
+    xmlns:chrono="clr-namespace:ChronoTimer.Maui.Pages.ChronoTimer"
+    Shell.FlyoutBehavior="Disabled">
     <ShellContent
         ContentTemplate="{DataTemplate pages:ChronoSelectionPage}"
         Route="selection" />
@@ -19,6 +19,10 @@
         Route="chessSetup" />
 
     <ShellContent
-        ContentTemplate="{DataTemplate pages:ChronoTimerPage}"
-        Route="chrono" />
+        ContentTemplate="{DataTemplate chrono:ExerciceChronoTimerPage}"
+        Route="exerciceChrono" />
+    
+    <ShellContent
+        ContentTemplate="{DataTemplate chrono:ChessChronoTimerPage}"
+        Route="chessChrono" />
 </Shell>
