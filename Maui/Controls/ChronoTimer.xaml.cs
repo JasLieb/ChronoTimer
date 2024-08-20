@@ -29,7 +29,52 @@ public partial class ChronoTimer : ContentView
         get => GetValue(ChronoStateProperty) as GenericChronoState;
         set => SetValue(ChronoStateProperty, value);
     }
-    
+
+    public static readonly BindableProperty IsRevertedProperty =
+        BindableProperty.Create(
+            nameof(IsReverted),
+            typeof(bool),
+            typeof(ChronoTimer),
+            false,
+            propertyChanged: async (bindable, _, newValue) =>
+            {
+                if (
+                    bindable is ChronoTimer chronoTimer
+                    && newValue is bool mustRevert
+                    && mustRevert
+                )
+                    await chronoTimer.Revert();
+            }
+        );
+
+    public bool IsReverted
+    {
+        get => (bool)GetValue(IsRevertedProperty);
+        set => SetValue(IsRevertedProperty, value);
+    }
+
+    public static readonly BindableProperty IsEllipsesVisibleProperty =
+        BindableProperty.Create(
+            nameof(IsEllipsesVisible),
+            typeof(bool),
+            typeof(ChronoTimer),
+            false,
+            propertyChanged: (bindable, _, newValue) =>
+            {
+                if (
+                    bindable is ChronoTimer chronoTimer
+                    && newValue is bool isVisible
+                )
+                    chronoTimer.DisplayEllipses(isVisible);
+            }
+        );
+
+    public bool IsEllipsesVisible
+    {
+        get => (bool)GetValue(IsEllipsesVisibleProperty);
+        set => SetValue(IsEllipsesVisibleProperty, value);
+    }
+
     public static readonly BindableProperty OnTapCommandProperty =
         BindableProperty.Create(
             nameof(OnTapCommand),
@@ -52,13 +97,24 @@ public partial class ChronoTimer : ContentView
     protected void OnTapped(object sender, EventArgs args) =>
         OnTapCommand?.Execute(null);
 
+    private async Task Revert()
+    {
+        await ChronoTimerContainer.RotateXTo(180, length: 0);
+        await ChronoTimerContainer.RotateYTo(180, length: 0);
+    }
+
+    private void DisplayEllipses(bool isVisible) =>
+        EllipsePulse.IsVisible = isVisible;
+
     private void OnChronoStateUpdate(
         GenericChronoState? newState
     )
     {
         newState ??= new();
 
-        EllipsePulse.ChronoState = newState;
+        if (IsEllipsesVisible)
+            EllipsePulse.ChronoState = newState;
+
         RemainingTimeLabel.Text =
             $"{newState.RemainingTime:mm}:{newState.RemainingTime:ss}";
 
@@ -82,7 +138,7 @@ public partial class ChronoTimer : ContentView
         );
     }
 
-    private static Color ConvertRgbToColor(RGB? newRgbColor) => 
+    private static Color ConvertRgbToColor(RGB? newRgbColor) =>
         newRgbColor is RGB rgb
         ? Color.FromRgb(rgb.Red, rgb.Green, rgb.Blue)
         : Colors.Transparent;

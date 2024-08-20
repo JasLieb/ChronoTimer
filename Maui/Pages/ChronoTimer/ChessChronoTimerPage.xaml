@@ -17,6 +17,7 @@
         <controls:ChronoTimer
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
+            IsReverted="True"
             IsEnabled="{Binding IsFirstPlayerEnabled}"
             OnTapCommand="{Binding NextPlayerCommand}"
             ChronoState="{Binding FirstPlayerChronoState}"/>
@@ -25,10 +26,36 @@
             Grid.Row="1"
             HorizontalOptions="FillAndExpand"
             VerticalOptions="FillAndExpand"
+            IsEllipsesVisible="False"
             IsEnabled="{Binding IsSecondPlayerEnabled}"
             OnTapCommand="{Binding NextPlayerCommand}"
             ChronoState="{Binding SecondPlayerChronoState}"/>
 
+        <Frame
+            Grid.RowSpan="2"
+            HorizontalOptions="Fill"
+            VerticalOptions="Center"
+            BorderColor="{x:StaticResource Gray500}">
+            <Frame.Style>
+                <Style TargetType="Frame">
+                    <Style.Triggers>
+                        <DataTrigger
+                            TargetType="Frame"
+                            Binding="{Binding IsFirstPlayerEnabled}"
+                            Value="True">
+                            <Setter Property="Rotation"
+                                    Value="180"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Frame.Style>
+
+            <Label
+                Text="⬇︎ You go ! Tap on your chrono to pass the turn ⬇︎"
+                FontSize="Medium"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"/>
+        </Frame>
         <Button
             Grid.Row="2"
             Margin="12"
